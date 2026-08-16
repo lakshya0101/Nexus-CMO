@@ -335,7 +335,7 @@ async def _generate_gemini(prompt: str) -> str:
 
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={CONFIG['GEMINI_API_KEY']}",
+            f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={CONFIG['GEMINI_API_KEY']}",
             headers={"Content-Type": "application/json"},
             json={
                 "system_instruction": {"parts": [{"text": SYSTEM_PROMPT}]},
@@ -876,12 +876,13 @@ async def _publish_single_post(post: dict):
 
 @app.get("/api/pipeline/signals")
 async def api_get_signals(limit: int = 20):
-    """Get recent intelligence signals from Scout."""
+    """Get recent intelligence signals from Scout with Opportunity Scores."""
     conn = get_db()
     try:
         rows = conn.execute("SELECT * FROM signals ORDER BY fetched_at DESC LIMIT ?", (limit,)).fetchall()
         conn.close()
-        return [dict(r) for r in rows]
+        from agents.scout import enrich_signal_with_opportunity
+        return [enrich_signal_with_opportunity(dict(r)) for r in rows]
     except Exception:
         conn.close()
         return []

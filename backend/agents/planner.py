@@ -96,18 +96,30 @@ def create_plan(signal_id: int, platform: str, content_type: str,
 
 
 def plan_signal(signal: Dict) -> List[Dict]:
-    """Decide what to do with a signal — which platforms and formats.
+    """Decide what to do with a signal — which platforms, formats, and priority based on Opportunity Score.
 
     Returns list of plan dicts created.
     """
     plans = []
     title = signal.get("title", "")
     signal_type = signal.get("signal_type", "news")
-    score = signal.get("score", 0)
-    relevance = signal.get("relevance_score", 0)
+    score = signal.get("score", 0) or 0
+    relevance = signal.get("relevance_score", 0) or 0.0
 
-    # High-relevance news → LinkedIn + X + Discord
-    if signal_type == "news" and (relevance > 0.3 or score > 100):
+    # Retrieve or calculate Opportunity Score (0-100) and Label
+    opp_score = signal.get("opportunity_score")
+    opp_label = signal.get("opportunity_label")
+    if opp_score is None or opp_label is None:
+        from agents.scout import calculate_opportunity_score
+        opp_score, opp_label, _ = calculate_opportunity_score(signal)
+
+    # Calculate deterministic priority (1-10 scale) based on Opportunity Score
+    # Ensures higher opportunity score receives higher priority while preserving existing bounds
+    calculated_priority = min(10, max(1, round(opp_score / 10)))
+
+    # High-opportunity / High-relevance news (Opportunity >= 60, Relevance > 0.3, or Score > 100)
+    # -> Multi-platform distribution: LinkedIn (11 AM window) + X + Discord
+    if signal_type == "news" and (opp_score >= 60 or relevance > 0.3 or score > 100):
         for platform, hour in [("discord", None), ("linkedin", 11), ("x", None)]:
             limits = DEFAULT_LIMITS.get(platform, {})
             cap = limits.get("daily_cap", 5)
@@ -117,27 +129,29 @@ def plan_signal(signal: Dict) -> List[Dict]:
                     signal_id=signal["id"],
                     platform=platform,
                     content_type="ai-news",
-                    priority=min(10, score // 50 + int(relevance * 5)),
+                    priority=calculated_priority,
                     scheduled_hour=hour,
-                    brief=f"News post about: {title}"
+                    brief=f"[{opp_label} Opp: {opp_score}/100] News post about: {title}"
                 )
-                plans.append({"platform": platform, "type": "ai-news"})
+                plans.append({"platform": platform, "type": "ai-news", "priority": calculated_priority})
 
-    # Medium-relevance news → Discord only
-    elif signal_type == "news" and relevance > 0.1:
+    # Moderate-opportunity news (Opportunity >= 40 or Relevance > 0.1) -> Discord only
+    elif signal_type == "news" and (opp_score >= 40 or relevance > 0.1):
         current = get_todays_plan_count("discord") + get_todays_post_count("discord")
         if current < DEFAULT_LIMITS["discord"]["daily_cap"]:
+            discord_priority = max(1, calculated_priority - 2)
             create_plan(
                 signal_id=signal["id"],
                 platform="discord",
                 content_type="ai-news",
-                priority=3,
-                brief=f"Quick news drop: {title}"
+                priority=discord_priority,
+                brief=f"[{opp_label} Opp: {opp_score}/100] Quick news drop: {title}"
             )
-            plans.append({"platform": "discord", "type": "ai-news"})
+            plans.append({"platform": "discord", "type": "ai-news", "priority": discord_priority})
 
-    # Repo signals → Discord + LinkedIn (3x/week) + Reddit
+    # Repo and release signals -> Discord + LinkedIn (3x/week) + Reddit
     elif signal_type in ("repo", "release"):
+        repo_priority = max(7, calculated_priority)
         for platform in ["discord", "linkedin", "reddit"]:
             limits = DEFAULT_LIMITS.get(platform, {})
             cap = limits.get("daily_cap", 5)
@@ -147,10 +161,10 @@ def plan_signal(signal: Dict) -> List[Dict]:
                     signal_id=signal["id"],
                     platform=platform,
                     content_type="repo-promo",
-                    priority=7,
-                    brief=f"Promote repo: {title}"
+                    priority=repo_priority,
+                    brief=f"[{opp_label} Opp: {opp_score}/100] Promote repo: {title}"
                 )
-                plans.append({"platform": platform, "type": "repo-promo"})
+                plans.append({"platform": platform, "type": "repo-promo", "priority": repo_priority})
 
     return plans
 
