@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SocialFlow - AI Social Media Automation</title>
+    <title>Nexus CMO — Your Personal Social CMO Network</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #09090b;
-            --bg-card: #18181b;
-            --bg-elevated: #27272a;
-            --border: #3f3f46;
-            --border-light: #52525b;
+            --bg-dark: #070707;
+            --bg-card: #111214;
+            --bg-elevated: #151619;
+            --border: #2a2a2d;
+            --border-light: #3f3f46;
             --text: #fafafa;
             --text-dim: #a1a1aa;
             --text-muted: #71717a;
             
-            --accent: #8b5cf6;
-            --accent-dim: #7c3aed;
-            --accent-glow: rgba(139, 92, 246, 0.4);
+            --accent: #2563eb; /* deep electric blue */
+            --accent-dim: #4338ca; /* indigo */
+            --accent-glow: rgba(37, 99, 235, 0.4);
+            
+            --glow-orange: rgba(234, 88, 12, 0.15); /* warm atmospheric glow */
             
             --linkedin: #0a66c2;
             --instagram: #e4405f;
@@ -42,26 +44,33 @@
             background: var(--bg-dark);
             color: var(--text);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Gradient background */
-        body::before {
-            content: '';
+        /* Cinematic Background */
+        .cinematic-bg {
             position: fixed;
             inset: 0;
-            background: 
-                radial-gradient(ellipse 100% 100% at 0% 0%, rgba(139, 92, 246, 0.08), transparent 50%),
-                radial-gradient(ellipse 80% 80% at 100% 100%, rgba(59, 130, 246, 0.06), transparent 50%);
+            background: radial-gradient(circle at 50% -20%, var(--glow-orange), transparent 50%),
+                        radial-gradient(ellipse at 50% 100%, rgba(37, 99, 235, 0.05), transparent 70%);
             pointer-events: none;
             z-index: -1;
         }
+        
+        .cinematic-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.03%22/%3E%3C/svg%3E');
+        }
 
-        .app { display: flex; min-height: 100vh; }
+        .app { display: flex; min-height: 100vh; position: relative; z-index: 1; }
 
         /* Sidebar */
         .sidebar {
             width: 280px;
-            background: var(--bg-card);
+            background: rgba(17, 18, 20, 0.8);
+            backdrop-filter: blur(20px);
             border-right: 1px solid var(--border);
             padding: 24px 16px;
             display: flex;
@@ -69,6 +78,7 @@
             position: fixed;
             height: 100vh;
             overflow-y: auto;
+            z-index: 100;
         }
 
         .logo {
@@ -76,52 +86,51 @@
             align-items: center;
             gap: 14px;
             padding: 8px 12px;
-            margin-bottom: 32px;
-        }
-
-        .logo-icon {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, var(--accent) 0%, #3b82f6 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            box-shadow: 0 8px 24px var(--accent-glow);
+            margin-bottom: 8px;
         }
 
         .logo h1 {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
-            background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #fff 30%, var(--accent-dim) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+        
+        .tagline {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            padding: 0 12px;
+            margin-bottom: 32px;
         }
 
         .nav-group { margin-bottom: 28px; }
         
         .nav-label {
-            font-size: 11px;
-            font-weight: 600;
+            font-size: 10px;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.2px;
             color: var(--text-muted);
             padding: 0 12px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
             gap: 14px;
-            padding: 12px 14px;
-            border-radius: var(--radius);
+            padding: 10px 14px;
+            border-radius: 8px;
             cursor: pointer;
             color: var(--text-dim);
-            transition: all 0.15s ease;
+            transition: all 0.2s ease;
             margin-bottom: 4px;
             font-weight: 500;
+            font-size: 14px;
         }
 
         .nav-item:hover {
@@ -130,57 +139,75 @@
         }
 
         .nav-item.active {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(59, 130, 246, 0.1) 100%);
-            color: var(--accent);
-            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: rgba(37, 99, 235, 0.1);
+            color: #fff;
         }
 
-        .nav-icon { font-size: 20px; width: 24px; text-align: center; }
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 3px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .nav-icon { font-size: 18px; width: 24px; text-align: center; font-weight: 300; }
 
         /* Main Content */
         .main {
             flex: 1;
             margin-left: 280px;
-            padding: 32px 40px;
+            padding: 40px;
             max-width: 1400px;
+        }
+        
+        .main.landing-mode {
+            margin-left: 0;
+            padding: 0;
+            max-width: 100%;
         }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 32px;
+            margin-bottom: 40px;
         }
 
         .page-title {
-            font-size: 32px;
-            font-weight: 700;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
         }
 
         /* Buttons */
         .btn {
             padding: 12px 24px;
-            border-radius: var(--radius);
+            border-radius: 8px;
             border: none;
             font-family: inherit;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dim) 100%);
+            background: var(--accent);
             color: white;
-            box-shadow: 0 4px 16px var(--accent-glow);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px var(--accent-glow);
+            background: var(--accent-dim);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.4);
         }
 
         .btn-secondary {
@@ -194,14 +221,14 @@
         }
 
         .btn-danger {
-            background: rgba(239, 68, 68, 0.15);
+            background: rgba(239, 68, 68, 0.1);
             color: var(--danger);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
         .btn-linkedin { background: var(--linkedin); color: white; }
         .btn-instagram { background: var(--instagram); color: white; }
-        .btn-twitter { background: var(--twitter); color: white; border: 1px solid var(--border); }
+        .btn-twitter { background: var(--bg-card); color: white; border: 1px solid var(--border); }
 
         .btn:disabled {
             opacity: 0.5;
@@ -214,156 +241,259 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
-            padding: 24px;
+            padding: 28px;
             margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .card-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
-            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
             gap: 10px;
+            text-transform: uppercase;
+            color: var(--text-dim);
         }
 
-        /* Stats Grid */
+        /* Executive Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
         }
 
         .stat-card {
-            background: var(--bg-card);
+            background: var(--bg-elevated);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             padding: 24px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .stat-label { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
-        .stat-value { font-size: 36px; font-weight: 700; }
-        .stat-sub { font-size: 12px; color: var(--success); margin-top: 6px; }
+        .stat-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 12px; }
+        .stat-value { font-size: 32px; font-weight: 500; letter-spacing: -1px; }
+        .stat-sub { font-size: 12px; color: var(--success); margin-top: auto; padding-top: 12px; }
 
         /* Grid Layout */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 24px;
+        .grid-2 { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+        /* Landing / Hero */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 15vh;
+            text-align: center;
+            position: relative;
         }
 
+        .hero-title {
+            font-size: 64px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #fff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-dim);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+        
+        .hero-horizon {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 400px;
+            background: radial-gradient(ellipse at center 100%, var(--glow-orange) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .product-preview {
+            width: 90%;
+            max-width: 1200px;
+            height: 600px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05) inset;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            display: flex;
+            transform: perspective(1000px) rotateX(2deg);
+            transform-origin: bottom center;
+        }
+        
+        .preview-sidebar {
+            width: 240px;
+            border-right: 1px solid var(--border);
+            background: var(--bg-elevated);
+            padding: 20px;
+        }
+        
+        .preview-content {
+            flex: 1;
+            padding: 32px;
+            background: var(--bg-dark);
+            opacity: 0.7;
+        }
+
+        /* Opportunity Radar */
+        .radar-score-container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 32px;
+        }
+        .radar-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 30px rgba(37,99,235,0.2);
+        }
+        .radar-score { font-size: 36px; font-weight: 700; color: #fff; }
+        .radar-label { font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+        
+        .factor-list { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+        .factor-item { display: flex; flex-direction: column; gap: 8px; }
+        .factor-header { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); }
+        .factor-bar-bg { height: 6px; background: var(--bg-elevated); border-radius: 3px; overflow: hidden; }
+        .factor-bar-fill { height: 100%; background: var(--accent); border-radius: 3px; }
+
+        /* Agent Network */
+        .agent-network {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            position: relative;
+        }
+        
+        .agent-line {
+            position: absolute;
+            top: 50%;
+            left: 40px;
+            right: 40px;
+            height: 2px;
+            background: var(--border);
+            z-index: 0;
+        }
+        
+        .agent-node {
+            position: relative;
+            z-index: 1;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            width: 140px;
+            transition: all 0.3s;
+        }
+        
+        .agent-node.active {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .agent-name { font-size: 13px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
+        .agent-role { font-size: 11px; color: var(--text-dim); margin-bottom: 12px; }
+        .agent-status { font-size: 10px; padding: 4px 8px; border-radius: 10px; display: inline-block; }
+        
+        .status-active { background: rgba(37, 99, 235, 0.1); color: #60a5fa; }
+        .status-ready { background: rgba(255,255,255,0.05); color: var(--text-muted); }
+        
         /* Form Elements */
-        .form-group { margin-bottom: 20px; }
+        .form-group { margin-bottom: 24px; }
 
         .form-label {
             display: block;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             color: var(--text-dim);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .form-input, .form-textarea, .form-select {
             width: 100%;
             padding: 14px 16px;
-            background: var(--bg-dark);
+            background: var(--bg-elevated);
             border: 1px solid var(--border);
-            border-radius: var(--radius);
+            border-radius: 8px;
             color: var(--text);
             font-family: inherit;
             font-size: 14px;
-            transition: all 0.15s ease;
+            transition: all 0.2s ease;
         }
 
         .form-input:focus, .form-textarea:focus, .form-select:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-glow);
+            background: var(--bg-dark);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .form-textarea { min-height: 120px; resize: vertical; }
 
         /* Platform Pills */
-        .platform-pills {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+        .platform-pills { display: flex; gap: 12px; margin-bottom: 24px; }
 
         .platform-pill {
             flex: 1;
             padding: 16px 20px;
-            border-radius: var(--radius);
-            border: 2px solid var(--border);
-            background: transparent;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-elevated);
             color: var(--text-dim);
             font-family: inherit;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
         }
 
-        .platform-pill:hover { border-color: var(--border-light); }
-
-        .platform-pill.active.linkedin {
-            border-color: var(--linkedin);
-            background: rgba(10, 102, 194, 0.1);
-            color: var(--linkedin);
-        }
-
-        .platform-pill.active.instagram {
-            border-color: var(--instagram);
-            background: rgba(228, 64, 95, 0.1);
-            color: var(--instagram);
-        }
-
-        .platform-pill.active.twitter {
-            border-color: var(--text);
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text);
-        }
-
-        /* AI Toggle */
-        .ai-toggle {
-            display: flex;
-            background: var(--bg-dark);
-            border-radius: var(--radius);
-            padding: 4px;
-            margin-bottom: 20px;
-        }
-
-        .ai-btn {
-            flex: 1;
-            padding: 12px 16px;
-            border: none;
-            background: transparent;
-            color: var(--text-dim);
-            font-family: inherit;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.15s ease;
-        }
-
-        .ai-btn.active {
-            background: var(--accent);
-            color: white;
-        }
+        .platform-pill:hover { border-color: var(--border-light); background: var(--bg-dark); }
+        
+        .platform-pill.active { border-color: var(--accent); color: white; background: rgba(37,99,235,0.1); }
 
         /* Content Type Tabs */
         .content-tabs {
             display: flex;
             gap: 4px;
-            background: var(--bg-dark);
+            background: var(--bg-elevated);
             padding: 4px;
-            border-radius: var(--radius);
-            margin-bottom: 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
         }
 
         .content-tab {
@@ -375,245 +505,45 @@
             font-family: inherit;
             font-weight: 500;
             cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.15s ease;
+            border-radius: 6px;
+            transition: all 0.2s ease;
             font-size: 13px;
         }
 
-        .content-tab.active {
-            background: var(--bg-elevated);
-            color: var(--text);
-        }
+        .content-tab.active { background: var(--bg-card); color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
 
-        /* Generated Content */
-        .generated-content {
-            background: var(--bg-dark);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
-            white-space: pre-wrap;
-            font-size: 14px;
-            line-height: 1.7;
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-        }
-
-        /* Post Item */
+        /* Posts */
         .post-item {
             background: var(--bg-elevated);
             border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 12px;
-            transition: all 0.15s ease;
-        }
-
-        .post-item:hover { border-color: var(--border-light); }
-
-        .post-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
-
-        .post-badges { display: flex; gap: 8px; }
-
-        .badge {
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .badge.linkedin { background: rgba(10, 102, 194, 0.2); color: var(--linkedin); }
-        .badge.instagram { background: rgba(228, 64, 95, 0.2); color: var(--instagram); }
-        .badge.twitter { background: rgba(255, 255, 255, 0.1); color: var(--text); }
-
-        .badge.draft { background: rgba(255, 255, 255, 0.1); color: var(--text-dim); }
-        .badge.scheduled { background: rgba(139, 92, 246, 0.2); color: var(--accent); }
-        .badge.publishing { background: rgba(234, 179, 8, 0.2); color: var(--warning); }
-        .badge.published { background: rgba(34, 197, 94, 0.2); color: var(--success); }
-        .badge.failed { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
-
-        .post-content {
-            font-size: 14px;
-            color: var(--text-dim);
-            line-height: 1.6;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .post-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
-        }
-
-        .post-time { font-size: 12px; color: var(--text-muted); }
-        .post-actions { display: flex; gap: 8px; }
-
-        .action-btn {
-            padding: 8px 14px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-dim);
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .action-btn:hover {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: white;
-        }
-
-        .action-btn.danger:hover {
-            background: var(--danger);
-            border-color: var(--danger);
-        }
-
-        /* Account Item */
-        .account-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            margin-bottom: 16px;
-        }
-
-        .account-info { display: flex; align-items: center; gap: 16px; }
-
-        .account-icon {
-            width: 48px;
-            height: 48px;
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            color: white;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: all 0.2s ease;
         }
-
-        .account-icon.linkedin { background: var(--linkedin); }
-        .account-icon.instagram { background: var(--instagram); }
-        .account-icon.twitter { background: var(--twitter); border: 1px solid var(--border); }
-
-        .account-name { font-weight: 600; font-size: 15px; }
-        .account-status { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-        .account-status.connected { color: var(--success); }
-
-        .account-actions { display: flex; gap: 10px; }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            backdrop-filter: blur(8px);
-        }
-
-        .modal {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            width: 90%;
-            max-width: 500px;
-            padding: 32px;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .modal-title { font-size: 22px; font-weight: 700; }
-
-        .modal-close {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-dim);
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-close:hover {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: var(--danger);
-            color: var(--danger);
-        }
-
-        /* Loading Spinner */
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--border);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
+        .post-item:hover { border-color: var(--border-light); transform: translateY(-2px); }
+        .post-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+        .badge { padding: 6px 12px; border-radius: 6px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .badge.linkedin { background: rgba(10, 102, 194, 0.1); color: var(--linkedin); border: 1px solid rgba(10, 102, 194, 0.3); }
+        .badge.instagram { background: rgba(228, 64, 95, 0.1); color: var(--instagram); border: 1px solid rgba(228, 64, 95, 0.3); }
+        .badge.twitter { background: rgba(255, 255, 255, 0.05); color: var(--text); border: 1px solid var(--border); }
+        .badge.draft { background: rgba(255, 255, 255, 0.05); color: var(--text-dim); }
+        .badge.scheduled { background: rgba(139, 92, 246, 0.1); color: #a78bfa; }
+        .badge.publishing { background: rgba(234, 179, 8, 0.1); color: var(--warning); }
+        .badge.published { background: rgba(34, 197, 94, 0.1); color: var(--success); }
+        .post-content { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+        .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+        
+        /* Modals & Loaders */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(8px); }
+        .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); width: 90%; max-width: 500px; padding: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.2); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
 
-        .loading-center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px;
-            color: var(--text-muted);
-            gap: 16px;
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-muted);
-        }
-
-        .empty-icon { font-size: 48px; margin-bottom: 16px; }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .grid-2 { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar { display: none; }
-            .main { margin-left: 0; padding: 20px; }
-            .platform-pills { flex-direction: column; }
-        }
-    </style>
+        @media (max-width: 1024px) { .grid-2 { grid-template-columns: 1fr; } .grid-3 { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .sidebar { display: none; } .main { margin-left: 0; padding: 20px; } }
+</style>
 </head>
 <body>
     <div id="root"></div>
@@ -621,7 +551,7 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
         
-        const API = 'http://localhost:8000/api';
+        const API = '/api';
 
         // API helper
         const api = {
@@ -635,6 +565,21 @@
         };
 
         // Platform icons
+                const Icons = {
+            overview: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>,
+            radar: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
+            network: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>,
+            spark: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>,
+            layers: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg>,
+            video: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>,
+            userVideo: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>,
+            library: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,
+            chart: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
+            users: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
+            gear: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
+            check: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
+            trash: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        };
         const icons = {
             linkedin: '💼',
             instagram: '📸',
@@ -648,121 +593,460 @@
         };
 
         // Sidebar Component
-        function Sidebar({ active, onChange }) {
-            const navItems = [
-                { id: 'dashboard', icon: icons.dashboard, label: 'Dashboard' },
-                { id: 'create', icon: icons.create, label: 'Create Content' },
+        
+function Sidebar({ active, onChange }) {
+    const navGroups = [
+        {
+            label: 'Command Center',
+            items: [
+                { id: 'dashboard', icon: '⚡', label: 'Overview' },
+                { id: 'opportunity', icon: '🎯', label: 'Opportunity Radar' },
+                { id: 'network', icon: '🤖', label: 'Agent Network' }
+            ]
+        },
+        {
+            label: 'Content',
+            items: [
+                { id: 'create', icon: '✨', label: 'Create Content' },
                 { id: 'carousel', icon: '🎠', label: 'Carousel Maker' },
                 { id: 'video', icon: '🎬', label: 'Video/Reel Maker' },
                 { id: 'avatar', icon: '🧑‍💼', label: 'Avatar Videos' },
-                { id: 'posts', icon: icons.posts, label: 'All Posts' },
-                { id: 'accounts', icon: icons.accounts, label: 'Accounts' },
-                { id: 'settings', icon: icons.settings, label: 'Settings' },
-            ];
-
-            return (
-                <aside className="sidebar">
-                    <div className="logo">
-                        <div className="logo-icon">⚡</div>
-                        <h1>SocialFlow</h1>
-                    </div>
-                    
-                    <nav className="nav-group">
-                        <div className="nav-label">Menu</div>
-                        {navItems.map(item => (
-                            <div 
-                                key={item.id}
-                                className={`nav-item ${active === item.id ? 'active' : ''}`}
-                                onClick={() => onChange(item.id)}
-                            >
-                                <span className="nav-icon">{item.icon}</span>
-                                {item.label}
-                            </div>
-                        ))}
-                    </nav>
-                    
-                    <div style={{ marginTop: 'auto', padding: '16px', borderTop: '1px solid var(--border)' }}>
-                        <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-                            🔒 Your credentials are encrypted locally
-                        </div>
-                    </div>
-                </aside>
-            );
+                { id: 'posts', icon: '📝', label: 'Content Library' }
+            ]
+        },
+        {
+            label: 'Analytics',
+            items: [
+                { id: 'performance', icon: '📈', label: 'Performance' }
+            ]
+        },
+        {
+            label: 'System',
+            items: [
+                { id: 'accounts', icon: '🔐', label: 'Accounts' },
+                { id: 'settings', icon: '⚙️', label: 'Settings' }
+            ]
         }
+    ];
+
+    return (
+        <aside className="sidebar">
+            <div className="logo">
+                <h1>NEXUS CMO</h1>
+            </div>
+            <div className="tagline">Your personal social CMO network</div>
+            
+            {navGroups.map((group, i) => (
+                <nav className="nav-group" key={i}>
+                    <div className="nav-label">{group.label}</div>
+                    {group.items.map(item => (
+                        <div 
+                            key={item.id}
+                            className={`nav-item ${active === item.id ? 'active' : ''}`}
+                            onClick={() => onChange(item.id)}
+                        >
+                            <span className="nav-icon">{item.icon}</span>
+                            {item.label}
+                        </div>
+                    ))}
+                </nav>
+            ))}
+        </aside>
+    );
+}
+
 
         // Dashboard
-        function Dashboard({ posts, accounts }) {
-            const stats = {
-                total: posts.length,
-                scheduled: posts.filter(p => p.status === 'scheduled').length,
-                published: posts.filter(p => p.status === 'published').length,
-                drafts: posts.filter(p => p.status === 'draft').length
-            };
+        
+function Landing({ onEnter }) {
+    return (
+        <div className="hero-section">
+            <div className="hero-horizon"></div>
+            <div style={{ position: 'relative', zIndex: 10 }}>
+                <h2 style={{ fontSize: '14px', letterSpacing: '4px', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '16px' }}>Nexus CMO</h2>
+                <h1 className="hero-title">Your personal<br/>social CMO network</h1>
+                <p className="hero-subtitle">
+                    A network of specialized AI agents that discovers opportunities, builds strategy, creates content, reviews it, publishes it, and learns from performance.
+                </p>
+                <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginBottom: '80px' }}>
+                    <button className="btn btn-primary" onClick={onEnter} style={{ padding: '16px 32px', fontSize: '16px' }}>
+                        Explore Command Center →
+                    </button>
+                    <button className="btn btn-secondary" onClick={onEnter} style={{ padding: '16px 32px', fontSize: '16px' }}>
+                        View Opportunities
+                    </button>
+                </div>
+            </div>
+            
+            <div className="product-preview">
+                <div className="preview-sidebar">
+                    <div style={{ width: '120px', height: '20px', background: 'var(--border)', borderRadius: '4px', marginBottom: '40px' }}></div>
+                    <div style={{ width: '80px', height: '10px', background: 'var(--border)', borderRadius: '4px', marginBottom: '16px' }}></div>
+                    <div style={{ width: '100%', height: '30px', background: 'var(--bg-dark)', borderRadius: '4px', marginBottom: '12px' }}></div>
+                    <div style={{ width: '100%', height: '30px', background: 'var(--bg-dark)', borderRadius: '4px', marginBottom: '12px' }}></div>
+                </div>
+                <div className="preview-content">
+                    <div style={{ width: '200px', height: '30px', background: 'var(--border)', borderRadius: '4px', marginBottom: '40px' }}></div>
+                    <div style={{ display: 'flex', gap: '20px', marginBottom: '40px' }}>
+                        <div style={{ flex: 1, height: '100px', background: 'var(--bg-card)', borderRadius: '12px' }}></div>
+                        <div style={{ flex: 1, height: '100px', background: 'var(--bg-card)', borderRadius: '12px' }}></div>
+                        <div style={{ flex: 1, height: '100px', background: 'var(--bg-card)', borderRadius: '12px' }}></div>
+                    </div>
+                    <div style={{ width: '100%', height: '200px', background: 'var(--bg-card)', borderRadius: '12px' }}></div>
+                </div>
+            </div>
+        </div>
+    );
+}
 
-            return (
+function CommandCenter({ posts, accounts, signals, agentStatus }) {
+    const stats = {
+        signals: signals ? signals.length : 0,
+        opportunities: signals ? signals.filter(s => (s.opportunity_score ?? 0) >= 60).length : 0,
+        content: posts ? posts.length : 0,
+        network: (agentStatus && agentStatus.some(a => a.status === 'Active' || a.status === 'Ready')) ? 'ONLINE' : 'OFFLINE'
+    };
+    
+    const topSignal = signals && signals.length > 0 ? signals[0] : null;
+
+    const defaultPipeline = [
+        { name: 'Scout', role: 'Trend Intelligence' },
+        { name: 'Planner', role: 'Content Strategy' },
+        { name: 'Creator', role: 'Content Gen' },
+        { name: 'Reviewer', role: 'Quality Control' },
+        { name: 'Publisher', role: 'Distribution' },
+        { name: 'Analyst', role: 'Learning' },
+    ];
+    
+    const pipeline = defaultPipeline.map(agent => {
+        const backendAgent = Array.isArray(agentStatus) ? agentStatus.find(a => a.name.toLowerCase() === agent.name.toLowerCase()) : null;
+        return {
+            ...agent,
+            status: backendAgent ? backendAgent.status : 'Offline'
+        };
+    });
+
+    return (
+        <div>
+            <div className="header">
                 <div>
-                    <div className="header">
-                        <h1 className="page-title">Dashboard</h1>
-                    </div>
-                    
-                    <div className="stats-grid">
-                        <div className="stat-card">
-                            <div className="stat-label">Total Posts</div>
-                            <div className="stat-value">{stats.total}</div>
-                        </div>
-                        <div className="stat-card">
-                            <div className="stat-label">Scheduled</div>
-                            <div className="stat-value">{stats.scheduled}</div>
-                        </div>
-                        <div className="stat-card">
-                            <div className="stat-label">Published</div>
-                            <div className="stat-value">{stats.published}</div>
-                            <div className="stat-sub">✓ Ready to grow</div>
-                        </div>
-                        <div className="stat-card">
-                            <div className="stat-label">Connected</div>
-                            <div className="stat-value">{accounts.filter(a => a.is_logged_in).length}/3</div>
-                        </div>
-                    </div>
+                    <h1 className="page-title">Command Center</h1>
+                    <div style={{ color: 'var(--text-dim)', marginTop: '8px' }}>Executive overview of your CMO network</div>
+                </div>
+            </div>
+            
+            <div className="stats-grid">
+                <div className="stat-card">
+                    <div className="stat-label">Signals Discovered</div>
+                    <div className="stat-value">{stats.signals}</div>
+                </div>
+                <div className="stat-card">
+                    <div className="stat-label">Opportunities</div>
+                    <div className="stat-value">{stats.opportunities}</div>
+                </div>
+                <div className="stat-card">
+                    <div className="stat-label">Content Generated</div>
+                    <div className="stat-value">{stats.content}</div>
+                </div>
+                <div className="stat-card">
+                    <div className="stat-label">Network Status</div>
+                    <div className="stat-value" style={{ color: stats.network === 'ONLINE' ? 'var(--success)' : 'var(--text-muted)' }}>{stats.network}</div>
+                </div>
+            </div>
 
-                    <div className="grid-2">
-                        <div className="card">
-                            <div className="card-title">📝 Recent Posts</div>
-                            {posts.slice(0, 5).map(post => (
-                                <PostItem key={post.id} post={post} compact />
-                            ))}
-                            {posts.length === 0 && (
-                                <div className="empty-state">
-                                    <div className="empty-icon">✨</div>
-                                    <p>No posts yet. Create your first one!</p>
+            {topSignal ? (() => {
+                const score = topSignal.opportunity_score ?? 0;
+                const label = topSignal.opportunity_label || (score >= 90 ? 'Exceptional' : score >= 75 ? 'High' : score >= 60 ? 'Promising' : score >= 40 ? 'Moderate' : 'Low');
+                const breakdown = topSignal.opportunity_breakdown || {};
+                return (
+                    <div className="card">
+                        <div className="card-title"><span style={{ display: 'inline-flex', verticalAlign: 'middle', marginRight: '8px', color: 'var(--accent)' }}>{Icons.radar}</span> OPPORTUNITY RADAR</div>
+                        <div className="radar-score-container">
+                            <div className="radar-circle">
+                                <div className="radar-score">{score}</div>
+                                <div className="radar-label">{label.toUpperCase()}</div>
+                            </div>
+                            <div className="factor-list">
+                                {breakdown.relevance !== undefined && (
+                                    <div className="factor-item">
+                                        <div className="factor-header"><span>Relevance (30%)</span><span>{breakdown.relevance} / 30</span></div>
+                                        <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.relevance / 30) * 100) + '%' }}></div></div>
+                                    </div>
+                                )}
+                                {breakdown.trend_momentum !== undefined && (
+                                    <div className="factor-item">
+                                        <div className="factor-header"><span>Trend Momentum (25%)</span><span>{breakdown.trend_momentum} / 25</span></div>
+                                        <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.trend_momentum / 25) * 100) + '%' }}></div></div>
+                                    </div>
+                                )}
+                                {breakdown.audience_fit !== undefined && (
+                                    <div className="factor-item">
+                                        <div className="factor-header"><span>Audience Fit (20%)</span><span>{breakdown.audience_fit} / 20</span></div>
+                                        <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.audience_fit / 20) * 100) + '%' }}></div></div>
+                                    </div>
+                                )}
+                                {breakdown.engagement_potential !== undefined && (
+                                    <div className="factor-item">
+                                        <div className="factor-header"><span>Engagement Potential (15%)</span><span>{breakdown.engagement_potential} / 15</span></div>
+                                        <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.engagement_potential / 15) * 100) + '%' }}></div></div>
+                                    </div>
+                                )}
+                                {breakdown.content_gap !== undefined && (
+                                    <div className="factor-item">
+                                        <div className="factor-header"><span>Content Gap (10%)</span><span>{breakdown.content_gap} / 10</span></div>
+                                        <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.content_gap / 10) * 100) + '%' }}></div></div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                );
+            })() : (
+                 <div className="card">
+                    <div className="card-title"><span style={{ display: 'inline-flex', verticalAlign: 'middle', marginRight: '8px', color: 'var(--accent)' }}>{Icons.radar}</span> OPPORTUNITY RADAR</div>
+                    <div className="empty-state" style={{ padding: '20px' }}>
+                        <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.radar}</div>
+                        <p>No opportunities discovered yet.</p>
+                    </div>
+                 </div>
+            )}
+
+            <div className="card">
+                <div className="card-title"><span style={{ display: 'inline-flex', verticalAlign: 'middle', marginRight: '8px', color: 'var(--accent)' }}>{Icons.network}</span> AI CMO NETWORK</div>
+                <div className="agent-network">
+                    <div className="agent-line"></div>
+                    {pipeline.map((agent, i) => {
+                        const isActive = agent.status === 'Active' || agent.status === 'Monitoring' || agent.status === 'Ready';
+                        const statusClass = isActive ? (agent.status === 'Active' ? 'status-active' : 'status-ready') : '';
+                        return (
+                            <div className={`agent-node ${isActive ? 'active' : ''}`} key={i}>
+                                <div className="agent-name">{agent.name}</div>
+                                <div className="agent-role">{agent.role}</div>
+                                <div className={`agent-status ${statusClass}`}>● {agent.status}</div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+            
+            <div className="grid-2">
+                <div className="card">
+                    <div className="card-title"><span style={{ display: 'inline-flex', verticalAlign: 'middle', marginRight: '8px', color: 'var(--accent)' }}>{Icons.overview}</span> RECENT INTELLIGENCE</div>
+                    {signals && signals.length > 0 ? (
+                        signals.slice(0, 2).map((sig, i) => (
+                             <div className="post-item" style={{ marginBottom: i === 0 ? '12px' : '0', padding: '16px' }} key={i}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                                    <span style={{ fontSize: '11px', color: 'var(--accent)', fontWeight: '700' }}>{sig.source || sig.type || 'INTELLIGENCE'} • {sig.opportunity_label || 'SCOUTED'}</span>
+                                    <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Score: {sig.opportunity_score ?? 0}</span>
                                 </div>
-                            )}
+                                <div style={{ fontWeight: '500', marginBottom: '4px' }}>{sig.title}</div>
+                                <div style={{ fontSize: '13px', color: 'var(--text-dim)' }}>{sig.summary || 'New intelligence gathered by your CMO network.'}</div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="empty-state" style={{ padding: '20px' }}>
+                            <p>No recent intelligence.</p>
                         </div>
+                    )}
+                </div>
+                
+                <div className="card">
+                    <div className="card-title"><span style={{ display: 'inline-flex', verticalAlign: 'middle', marginRight: '8px', color: 'var(--accent)' }}>{Icons.library}</span> CONTENT PIPELINE</div>
+                    {posts && posts.length > 0 ? posts.slice(0, 3).map(post => (
+                        <PostItem key={post.id} post={post} compact />
+                    )) : (
+                        <div className="empty-state" style={{ padding: '20px' }}>
+                            <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.spark}</div>
+                            <p>No content yet. Your CMO network is ready to create.</p>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
 
-                        <div className="card">
-                            <div className="card-title">🔗 Accounts</div>
-                            {['linkedin', 'instagram', 'twitter'].map(platform => {
-                                const account = accounts.find(a => a.platform === platform);
-                                return (
-                                    <div key={platform} className="account-item" style={{ padding: '14px' }}>
-                                        <div className="account-info">
-                                            <div className={`account-icon ${platform}`}>{icons[platform]}</div>
-                                            <div>
-                                                <div className="account-name" style={{ textTransform: 'capitalize' }}>{platform === 'twitter' ? 'X (Twitter)' : platform}</div>
-                                                <div className={`account-status ${account?.is_logged_in ? 'connected' : ''}`}>
-                                                    {account?.is_logged_in ? '● Connected' : '○ Not connected'}
-                                                </div>
+// Opportunity Radar Page
+function OpportunityRadar({ signals }) {
+    return (
+        <div>
+            <div className="header">
+                <div>
+                    <h1 className="page-title">Opportunity Radar</h1>
+                    <div style={{ color: 'var(--text-dim)', marginTop: '8px' }}>AI-ranked opportunities discovered by your CMO network</div>
+                </div>
+            </div>
+            
+            {(!signals || signals.length === 0) ? (
+                <div className="card">
+                    <div className="empty-state">
+                        <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.radar}</div>
+                        <p>No opportunities detected yet.</p>
+                        <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '8px' }}>Nexus CMO is scanning your intelligence sources.</p>
+                        <button className="btn btn-secondary" style={{ marginTop: '24px' }} onClick={() => window.location.reload()}>Refresh Intelligence</button>
+                    </div>
+                </div>
+            ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                    {signals.map((sig, i) => {
+                        const score = sig.opportunity_score ?? 0;
+                        const label = sig.opportunity_label || (score >= 90 ? 'Exceptional' : score >= 75 ? 'High' : score >= 60 ? 'Promising' : score >= 40 ? 'Moderate' : 'Low');
+                        const breakdown = sig.opportunity_breakdown || {};
+                        return (
+                            <div className="card" key={i}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
+                                    <h2 style={{ fontSize: '18px', fontWeight: '600', flex: 1 }}>{sig.title || 'Discovered Opportunity'}</h2>
+                                    <span style={{ fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--accent)', background: 'rgba(139, 92, 246, 0.1)', padding: '4px 10px', borderRadius: '6px', border: '1px solid rgba(139, 92, 246, 0.2)' }}>
+                                        {sig.source || 'Signal'} • {label}
+                                    </span>
+                                </div>
+                                {sig.summary && <p style={{ fontSize: '14px', color: 'var(--text-dim)', marginBottom: '20px', lineHeight: '1.6' }}>{sig.summary}</p>}
+                                <div className="radar-score-container" style={{ marginBottom: '24px' }}>
+                                    <div className="radar-circle">
+                                        <div className="radar-score">{score}</div>
+                                        <div className="radar-label">{label.toUpperCase()}</div>
+                                    </div>
+                                    <div className="factor-list">
+                                        {breakdown.relevance !== undefined && (
+                                            <div className="factor-item">
+                                                <div className="factor-header"><span>Relevance (30%)</span><span>{breakdown.relevance} / 30</span></div>
+                                                <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.relevance / 30) * 100) + '%' }}></div></div>
                                             </div>
-                                        </div>
+                                        )}
+                                        {breakdown.trend_momentum !== undefined && (
+                                            <div className="factor-item">
+                                                <div className="factor-header"><span>Trend Momentum (25%)</span><span>{breakdown.trend_momentum} / 25</span></div>
+                                                <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.trend_momentum / 25) * 100) + '%' }}></div></div>
+                                            </div>
+                                        )}
+                                        {breakdown.audience_fit !== undefined && (
+                                            <div className="factor-item">
+                                                <div className="factor-header"><span>Audience Fit (20%)</span><span>{breakdown.audience_fit} / 20</span></div>
+                                                <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.audience_fit / 20) * 100) + '%' }}></div></div>
+                                            </div>
+                                        )}
+                                        {breakdown.engagement_potential !== undefined && (
+                                            <div className="factor-item">
+                                                <div className="factor-header"><span>Engagement Potential (15%)</span><span>{breakdown.engagement_potential} / 15</span></div>
+                                                <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.engagement_potential / 15) * 100) + '%' }}></div></div>
+                                            </div>
+                                        )}
+                                        {breakdown.content_gap !== undefined && (
+                                            <div className="factor-item">
+                                                <div className="factor-header"><span>Content Gap (10%)</span><span>{breakdown.content_gap} / 10</span></div>
+                                                <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.content_gap / 10) * 100) + '%' }}></div></div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                                <div style={{ display: 'flex', gap: '12px' }}>
+                                    <button className="btn btn-primary" onClick={() => window.location.href = '#create'}>Create Content</button>
+                                    {sig.url && <a href={sig.url} target="_blank" rel="noreferrer" className="btn btn-secondary" style={{ textDecoration: 'none' }}>View Source ↗</a>}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
+        </div>
+    );
+}
+
+function AgentNetwork({ agentStatus }) {
+    const defaultPipeline = [
+        { name: 'Scout', role: 'Trend Intelligence', desc: 'Monitors trends, audience signals and emerging opportunities.' },
+        { name: 'Planner', role: 'Content Strategy', desc: 'Turns high-value signals into actionable content strategies.' },
+        { name: 'Creator', role: 'Content Generation', desc: 'Creates platform-specific content from approved strategies.' },
+        { name: 'Reviewer', role: 'Quality Control', desc: 'Checks tone, quality and strategic alignment.' },
+        { name: 'Publisher', role: 'Distribution', desc: 'Prepares and distributes approved content.' },
+        { name: 'Analyst', role: 'Performance Learning', desc: 'Measures performance and feeds insights back into the network.' }
+    ];
+
+    const pipeline = defaultPipeline.map(agent => {
+        const backendAgent = Array.isArray(agentStatus) ? agentStatus.find(a => a.name.toLowerCase() === agent.name.toLowerCase()) : null;
+        return {
+            ...agent,
+            status: backendAgent ? backendAgent.status : 'Offline'
+        };
+    });
+
+    const isNetworkActive = pipeline.some(a => a.status !== 'Offline');
+
+    return (
+        <div>
+            <div className="header">
+                <div>
+                    <h1 className="page-title">Agent Network</h1>
+                    <div style={{ color: 'var(--text-dim)', marginTop: '8px' }}>Your autonomous social CMO workforce</div>
+                </div>
+            </div>
+            
+            {!isNetworkActive ? (
+                <div className="card">
+                    <div className="empty-state">
+                        <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.network}</div>
+                        <p>Your agent network is currently offline.</p>
+                        <button className="btn btn-secondary" style={{ marginTop: '24px' }} onClick={() => window.location.reload()}>Retry Connection</button>
+                    </div>
+                </div>
+            ) : (
+                <>
+                    <div className="card" style={{ marginBottom: '24px' }}>
+                        <div className="agent-network" style={{ padding: '40px 0' }}>
+                            <div className="agent-line"></div>
+                            {pipeline.map((agent, i) => {
+                                const isActive = agent.status === 'Active' || agent.status === 'Monitoring' || agent.status === 'Ready';
+                                const statusClass = isActive ? (agent.status === 'Active' ? 'status-active' : 'status-ready') : '';
+                                return (
+                                    <div className={`agent-node ${isActive ? 'active' : ''}`} key={i}>
+                                        <div className="agent-name">{agent.name.toUpperCase()}</div>
+                                        <div className="agent-role">{agent.role}</div>
+                                        <div className={`agent-status ${statusClass}`}>● {agent.status}</div>
                                     </div>
                                 );
                             })}
                         </div>
                     </div>
-                </div>
-            );
-        }
+                    
+                    <h2 style={{ fontSize: '14px', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--text-dim)', marginBottom: '16px', marginTop: '40px' }}>Agent Details</h2>
+                    <div className="grid-2">
+                        {pipeline.map((agent, i) => {
+                            const isActive = agent.status === 'Active' || agent.status === 'Monitoring' || agent.status === 'Ready';
+                            const statusColor = isActive ? (agent.status === 'Active' ? 'var(--success)' : 'var(--accent)') : 'var(--text-muted)';
+                            return (
+                                <div className="card" key={i} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <div style={{ fontWeight: '700', fontSize: '16px' }}>{agent.name.toUpperCase()}</div>
+                                        <div style={{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: statusColor, background: 'rgba(255,255,255,0.05)', padding: '4px 8px', borderRadius: '4px' }}>● {agent.status}</div>
+                                    </div>
+                                    <div style={{ fontSize: '13px', color: 'var(--accent)' }}>{agent.role}</div>
+                                    <div style={{ fontSize: '13px', color: 'var(--text-dim)', marginTop: '8px', lineHeight: '1.5' }}>{agent.desc}</div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </>
+            )}
+        </div>
+    );
+}
 
+function Analytics() {
+    return (
+        <div>
+            <div className="header">
+                <h1 className="page-title">Performance</h1>
+            </div>
+            <div className="card">
+                <div className="empty-state">
+                    <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.chart}</div>
+                    <p>Performance Intelligence</p>
+                    <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '8px' }}>Performance insights will appear here once content is published.</p>
+                </div>
+            </div>
+        </div>
+    );
+}
         // Create Content
         function CreateContent({ onCreated, accounts }) {
             const [platform, setPlatform] = useState('linkedin');
@@ -826,7 +1110,7 @@
 
                     <div className="grid-2">
                         <div className="card">
-                            <div className="card-title">✨ AI Content Generator</div>
+                            <div className="card-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px", color: "var(--accent)" }}>{Icons.spark}</span> Create with your AI CMO</div>
 
                             <div className="form-label">Platform</div>
                             <div className="platform-pills">
@@ -890,12 +1174,12 @@
                             </div>
 
                             <button className="btn btn-primary" onClick={generate} disabled={loading || !topic} style={{ width: '100%' }}>
-                                {loading ? <><div className="spinner" /> Generating...</> : '✨ Generate Content'}
+                                {loading ? <><div className="spinner" /> Generating...</> : '<span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px" }}>{Icons.spark}</span> Generate Content'}
                             </button>
                         </div>
 
                         <div className="card">
-                            <div className="card-title">📤 Preview & Publish</div>
+                            <div className="card-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px", color: "var(--accent)" }}>{Icons.overview}</span> Preview & Publish</div>
 
                             {generated ? (
                                 <>
@@ -922,7 +1206,7 @@
                                 </>
                             ) : (
                                 <div className="empty-state">
-                                    <div className="empty-icon">✨</div>
+                                    <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.spark}</div>
                                     <p>Generated content will appear here</p>
                                 </div>
                             )}
@@ -977,7 +1261,7 @@
             return (
                 <div>
                     <div className="header">
-                        <h1 className="page-title">All Posts</h1>
+                        <h1 className="page-title">Content Library</h1>
                     </div>
 
                     <div className="content-tabs" style={{ maxWidth: '500px', marginBottom: '24px' }}>
@@ -994,7 +1278,7 @@
                         ))}
                         {filtered.length === 0 && (
                             <div className="empty-state">
-                                <div className="empty-icon">📝</div>
+                                <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.library}</div>
                                 <p>No posts found</p>
                             </div>
                         )}
@@ -1064,12 +1348,12 @@
             return (
                 <div>
                     <div className="header">
-                        <h1 className="page-title">🎠 Carousel Maker</h1>
+                        <h1 className="page-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "12px", color: "var(--accent)" }}>{Icons.layers}</span> Carousel Maker</h1>
                     </div>
 
                     <div className="grid-2">
                         <div className="card">
-                            <div className="card-title">✨ AI Carousel Generator</div>
+                            <div className="card-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px", color: "var(--accent)" }}>{Icons.spark}</span> AI Carousel Generator</div>
                             <p style={{ color: 'var(--text-muted)', marginBottom: '20px', fontSize: '13px' }}>
                                 Creates images + text with DALL-E 3 (~$0.04/slide)
                             </p>
@@ -1114,12 +1398,12 @@
                             </div>
 
                             <button className="btn btn-primary" onClick={generate} disabled={loading || !topic} style={{ width: '100%' }}>
-                                {loading ? <><div className="spinner" /> {progress}</> : `🎨 Generate ${slides} Slides (~$${(slides * 0.04).toFixed(2)})`}
+                                {loading ? <><div className="spinner" /> {progress}</> : `<span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px" }}>{Icons.layers}</span> Generate ${slides} Slides (~$${(slides * 0.04).toFixed(2)})`}
                             </button>
                         </div>
 
                         <div className="card">
-                            <div className="card-title">📱 Preview</div>
+                            <div className="card-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px", color: "var(--accent)" }}>{Icons.overview}</span> Preview</div>
                             {carousel ? (
                                 <div>
                                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginBottom: '16px' }}>
@@ -1145,7 +1429,7 @@
                                 </div>
                             ) : (
                                 <div className="empty-state">
-                                    <div className="empty-icon">🎠</div>
+                                    <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.layers}</div>
                                     <p>Your carousel will appear here</p>
                                 </div>
                             )}
@@ -1368,7 +1652,7 @@
                         </div>
 
                         <div className="card">
-                            <div className="card-title">📱 Preview</div>
+                            <div className="card-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px", color: "var(--accent)" }}>{Icons.overview}</span> Preview</div>
                             
                             {result ? (
                                 <div>
@@ -1740,7 +2024,7 @@
                         </div>
 
                         <div className="card">
-                            <div className="card-title">📱 Preview</div>
+                            <div className="card-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px", color: "var(--accent)" }}>{Icons.overview}</span> Preview</div>
 
                             {result || polling ? (
                                 <div>
@@ -2106,65 +2390,91 @@
         }
 
         // Main App
-        function App() {
-            const [tab, setTab] = useState('dashboard');
-            const [posts, setPosts] = useState([]);
-            const [accounts, setAccounts] = useState([]);
-            const [loading, setLoading] = useState(true);
+        
+function App() {
+    const [tab, setTab] = useState('landing');
+    const [posts, setPosts] = useState([]);
+    const [accounts, setAccounts] = useState([]);
+    const [signals, setSignals] = useState(null);
+    const [agentStatus, setAgentStatus] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-            const load = async () => {
-                try {
-                    const [postsRes, accountsRes] = await Promise.all([
-                        api.get('/posts'),
-                        api.get('/accounts')
-                    ]);
-                    setPosts(postsRes.posts || []);
-                    setAccounts(accountsRes.accounts || []);
-                } catch (err) {
-                    console.error('Failed to load:', err);
-                }
-                setLoading(false);
-            };
-
-            useEffect(() => { load(); }, []);
-
-            const deletePost = async (id) => {
-                if (confirm('Delete this post?')) {
-                    await api.delete(`/posts/${id}`);
-                    load();
-                }
-            };
-
-            const publishPost = async (id) => {
-                await api.post(`/posts/${id}/publish`);
-                load();
-            };
-
-            if (loading) {
-                return (
-                    <div className="loading-center" style={{ height: '100vh' }}>
-                        <div className="spinner" style={{ width: '40px', height: '40px' }} />
-                        <p>Loading SocialFlow...</p>
-                    </div>
-                );
-            }
-
-            return (
-                <div className="app">
-                    <Sidebar active={tab} onChange={setTab} />
-                    <main className="main">
-                        {tab === 'dashboard' && <Dashboard posts={posts} accounts={accounts} />}
-                        {tab === 'create' && <CreateContent onCreated={load} accounts={accounts} />}
-                        {tab === 'carousel' && <CarouselMaker onCreated={load} />}
-                        {tab === 'video' && <VideoMaker onCreated={load} />}
-                        {tab === 'avatar' && <AvatarMaker onCreated={load} />}
-                        {tab === 'posts' && <PostsList posts={posts} onDelete={deletePost} onPublish={publishPost} />}
-                        {tab === 'accounts' && <Accounts accounts={accounts} onRefresh={load} />}
-                        {tab === 'settings' && <Settings />}
-                    </main>
-                </div>
+    const load = async () => {
+        try {
+            const [postsRes, accountsRes, signalsRes, statusRes] = await Promise.all([
+                api.get('/posts').catch(() => ({ posts: [] })),
+                api.get('/accounts').catch(() => ({ accounts: [] })),
+                api.get('/pipeline/signals').catch(() => null),
+                api.get('/pipeline/status').catch(() => null)
+            ]);
+            setPosts(postsRes.posts || []);
+            setAccounts(accountsRes.accounts || []);
+            setSignals(
+                Array.isArray(signalsRes)
+                    ? signalsRes
+                    : (signalsRes?.signals || [])
             );
+            setAgentStatus(statusRes ? (Array.isArray(statusRes) ? statusRes : (statusRes.agents || [])) : []);
+        } catch (err) {
+            console.error('Failed to load:', err);
         }
+        setLoading(false);
+    };
+
+    useEffect(() => { load(); }, []);
+
+    const deletePost = async (id) => {
+        if (confirm('Delete this post?')) {
+            await api.delete(`/posts/${id}`);
+            load();
+        }
+    };
+
+    const publishPost = async (id) => {
+        await api.post(`/posts/${id}/publish`);
+        load();
+    };
+
+    if (loading) {
+        return (
+            <div className="loading-center" style={{ height: '100vh', background: 'var(--bg-dark)' }}>
+                <div className="spinner" style={{ width: '40px', height: '40px' }} />
+                <p>Initializing Nexus CMO...</p>
+            </div>
+        );
+    }
+
+    if (tab === 'landing') {
+        return (
+            <div className="app">
+                <div className="cinematic-bg"></div>
+                <main className="main landing-mode">
+                    <Landing onEnter={() => setTab('dashboard')} />
+                </main>
+            </div>
+        );
+    }
+
+    return (
+        <div className="app">
+            <div className="cinematic-bg"></div>
+            <Sidebar active={tab} onChange={setTab} />
+            <main className="main">
+                {tab === 'dashboard' && <CommandCenter posts={posts} accounts={accounts} signals={signals} agentStatus={agentStatus} />}
+                {tab === 'opportunity' && <OpportunityRadar signals={signals} />}
+                {tab === 'network' && <AgentNetwork agentStatus={agentStatus} />}
+                {tab === 'create' && <CreateContent onCreated={load} accounts={accounts} />}
+                {tab === 'carousel' && <CarouselMaker onCreated={load} />}
+                {tab === 'video' && <VideoMaker onCreated={load} />}
+                {tab === 'avatar' && <AvatarMaker onCreated={load} />}
+                {tab === 'posts' && <PostsList posts={posts} onDelete={deletePost} onPublish={publishPost} />}
+                {tab === 'performance' && <Analytics />}
+                {tab === 'accounts' && <Accounts accounts={accounts} onRefresh={load} />}
+                {tab === 'settings' && <Settings />}
+            </main>
+        </div>
+    );
+}
 
         ReactDOM.render(<App />, document.getElementById('root'));
     </script>
