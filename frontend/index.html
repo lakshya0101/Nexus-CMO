@@ -551,7 +551,7 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
         
-        const API = 'http://localhost:8000/api';
+        const API = '/api';
 
         // API helper
         const api = {
@@ -702,7 +702,7 @@ function Landing({ onEnter }) {
 function CommandCenter({ posts, accounts, signals, agentStatus }) {
     const stats = {
         signals: signals ? signals.length : 0,
-        opportunities: signals ? signals.filter(s => s.score >= 80).length : 0,
+        opportunities: signals ? signals.filter(s => (s.opportunity_score ?? 0) >= 60).length : 0,
         content: posts ? posts.length : 0,
         network: (agentStatus && agentStatus.some(a => a.status === 'Active' || a.status === 'Ready')) ? 'ONLINE' : 'OFFLINE'
     };
@@ -754,37 +754,54 @@ function CommandCenter({ posts, accounts, signals, agentStatus }) {
                 </div>
             </div>
 
-            {topSignal ? (
-                <div className="card">
-                    <div className="card-title"><span style={{ display: 'inline-flex', verticalAlign: 'middle', marginRight: '8px', color: 'var(--accent)' }}>{Icons.radar}</span> OPPORTUNITY RADAR</div>
-                    <div className="radar-score-container">
-                        <div className="radar-circle">
-                            <div className="radar-score">{topSignal.score || 0}</div>
-                            <div className="radar-label">{topSignal.score > 80 ? 'HIGH' : topSignal.score > 50 ? 'MED' : 'LOW'}</div>
-                        </div>
-                        <div className="factor-list">
-                            {topSignal.relevance !== undefined && (
-                                <div className="factor-item">
-                                    <div className="factor-header"><span>Relevance</span><span>{topSignal.relevance}%</span></div>
-                                    <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: topSignal.relevance + '%' }}></div></div>
-                                </div>
-                            )}
-                            {topSignal.momentum !== undefined && (
-                                <div className="factor-item">
-                                    <div className="factor-header"><span>Trend Momentum</span><span>{topSignal.momentum}%</span></div>
-                                    <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: topSignal.momentum + '%' }}></div></div>
-                                </div>
-                            )}
-                            {topSignal.audience_fit !== undefined && (
-                                <div className="factor-item">
-                                    <div className="factor-header"><span>Audience Fit</span><span>{topSignal.audience_fit}%</span></div>
-                                    <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: topSignal.audience_fit + '%' }}></div></div>
-                                </div>
-                            )}
+            {topSignal ? (() => {
+                const score = topSignal.opportunity_score ?? 0;
+                const label = topSignal.opportunity_label || (score >= 90 ? 'Exceptional' : score >= 75 ? 'High' : score >= 60 ? 'Promising' : score >= 40 ? 'Moderate' : 'Low');
+                const breakdown = topSignal.opportunity_breakdown || {};
+                return (
+                    <div className="card">
+                        <div className="card-title"><span style={{ display: 'inline-flex', verticalAlign: 'middle', marginRight: '8px', color: 'var(--accent)' }}>{Icons.radar}</span> OPPORTUNITY RADAR</div>
+                        <div className="radar-score-container">
+                            <div className="radar-circle">
+                                <div className="radar-score">{score}</div>
+                                <div className="radar-label">{label.toUpperCase()}</div>
+                            </div>
+                            <div className="factor-list">
+                                {breakdown.relevance !== undefined && (
+                                    <div className="factor-item">
+                                        <div className="factor-header"><span>Relevance (30%)</span><span>{breakdown.relevance} / 30</span></div>
+                                        <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.relevance / 30) * 100) + '%' }}></div></div>
+                                    </div>
+                                )}
+                                {breakdown.trend_momentum !== undefined && (
+                                    <div className="factor-item">
+                                        <div className="factor-header"><span>Trend Momentum (25%)</span><span>{breakdown.trend_momentum} / 25</span></div>
+                                        <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.trend_momentum / 25) * 100) + '%' }}></div></div>
+                                    </div>
+                                )}
+                                {breakdown.audience_fit !== undefined && (
+                                    <div className="factor-item">
+                                        <div className="factor-header"><span>Audience Fit (20%)</span><span>{breakdown.audience_fit} / 20</span></div>
+                                        <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.audience_fit / 20) * 100) + '%' }}></div></div>
+                                    </div>
+                                )}
+                                {breakdown.engagement_potential !== undefined && (
+                                    <div className="factor-item">
+                                        <div className="factor-header"><span>Engagement Potential (15%)</span><span>{breakdown.engagement_potential} / 15</span></div>
+                                        <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.engagement_potential / 15) * 100) + '%' }}></div></div>
+                                    </div>
+                                )}
+                                {breakdown.content_gap !== undefined && (
+                                    <div className="factor-item">
+                                        <div className="factor-header"><span>Content Gap (10%)</span><span>{breakdown.content_gap} / 10</span></div>
+                                        <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.content_gap / 10) * 100) + '%' }}></div></div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
-            ) : (
+                );
+            })() : (
                  <div className="card">
                     <div className="card-title"><span style={{ display: 'inline-flex', verticalAlign: 'middle', marginRight: '8px', color: 'var(--accent)' }}>{Icons.radar}</span> OPPORTUNITY RADAR</div>
                     <div className="empty-state" style={{ padding: '20px' }}>
@@ -819,11 +836,11 @@ function CommandCenter({ posts, accounts, signals, agentStatus }) {
                         signals.slice(0, 2).map((sig, i) => (
                              <div className="post-item" style={{ marginBottom: i === 0 ? '12px' : '0', padding: '16px' }} key={i}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                                    <span style={{ fontSize: '11px', color: 'var(--accent)', fontWeight: '700' }}>{sig.type || 'INTELLIGENCE'}</span>
-                                    <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{sig.time || 'Recently'}</span>
+                                    <span style={{ fontSize: '11px', color: 'var(--accent)', fontWeight: '700' }}>{sig.source || sig.type || 'INTELLIGENCE'} • {sig.opportunity_label || 'SCOUTED'}</span>
+                                    <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Score: {sig.opportunity_score ?? 0}</span>
                                 </div>
                                 <div style={{ fontWeight: '500', marginBottom: '4px' }}>{sig.title}</div>
-                                <div style={{ fontSize: '13px', color: 'var(--text-dim)' }}>{sig.desc || 'New intelligence gathered by your CMO network.'}</div>
+                                <div style={{ fontSize: '13px', color: 'var(--text-dim)' }}>{sig.summary || 'New intelligence gathered by your CMO network.'}</div>
                             </div>
                         ))
                     ) : (
@@ -849,7 +866,7 @@ function CommandCenter({ posts, accounts, signals, agentStatus }) {
     );
 }
 
-// Stubs for new pages
+// Opportunity Radar Page
 function OpportunityRadar({ signals }) {
     return (
         <div>
@@ -871,53 +888,64 @@ function OpportunityRadar({ signals }) {
                 </div>
             ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                    {signals.map((sig, i) => (
-                        <div className="card" key={i}>
-                            <h2 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '24px' }}>{sig.title || 'Discovered Opportunity'}</h2>
-                            <div className="radar-score-container" style={{ marginBottom: '24px' }}>
-                                <div className="radar-circle">
-                                    <div className="radar-score">{sig.score || 0}</div>
-                                    <div className="radar-label">{sig.score > 80 ? 'HIGH' : sig.score > 50 ? 'MED' : 'LOW'}</div>
+                    {signals.map((sig, i) => {
+                        const score = sig.opportunity_score ?? 0;
+                        const label = sig.opportunity_label || (score >= 90 ? 'Exceptional' : score >= 75 ? 'High' : score >= 60 ? 'Promising' : score >= 40 ? 'Moderate' : 'Low');
+                        const breakdown = sig.opportunity_breakdown || {};
+                        return (
+                            <div className="card" key={i}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
+                                    <h2 style={{ fontSize: '18px', fontWeight: '600', flex: 1 }}>{sig.title || 'Discovered Opportunity'}</h2>
+                                    <span style={{ fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--accent)', background: 'rgba(139, 92, 246, 0.1)', padding: '4px 10px', borderRadius: '6px', border: '1px solid rgba(139, 92, 246, 0.2)' }}>
+                                        {sig.source || 'Signal'} • {label}
+                                    </span>
                                 </div>
-                                <div className="factor-list">
-                                    {sig.relevance !== undefined && (
-                                        <div className="factor-item">
-                                            <div className="factor-header"><span>Relevance</span><span>{sig.relevance}%</span></div>
-                                            <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: sig.relevance + '%' }}></div></div>
-                                        </div>
-                                    )}
-                                    {sig.momentum !== undefined && (
-                                        <div className="factor-item">
-                                            <div className="factor-header"><span>Trend Momentum</span><span>{sig.momentum}%</span></div>
-                                            <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: sig.momentum + '%' }}></div></div>
-                                        </div>
-                                    )}
-                                    {sig.audience_fit !== undefined && (
-                                        <div className="factor-item">
-                                            <div className="factor-header"><span>Audience Fit</span><span>{sig.audience_fit}%</span></div>
-                                            <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: sig.audience_fit + '%' }}></div></div>
-                                        </div>
-                                    )}
-                                    {sig.engagement !== undefined && (
-                                        <div className="factor-item">
-                                            <div className="factor-header"><span>Engagement Potential</span><span>{sig.engagement}%</span></div>
-                                            <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: sig.engagement + '%' }}></div></div>
-                                        </div>
-                                    )}
-                                    {sig.content_gap !== undefined && (
-                                        <div className="factor-item">
-                                            <div className="factor-header"><span>Content Gap</span><span>{sig.content_gap}%</span></div>
-                                            <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: sig.content_gap + '%' }}></div></div>
-                                        </div>
-                                    )}
+                                {sig.summary && <p style={{ fontSize: '14px', color: 'var(--text-dim)', marginBottom: '20px', lineHeight: '1.6' }}>{sig.summary}</p>}
+                                <div className="radar-score-container" style={{ marginBottom: '24px' }}>
+                                    <div className="radar-circle">
+                                        <div className="radar-score">{score}</div>
+                                        <div className="radar-label">{label.toUpperCase()}</div>
+                                    </div>
+                                    <div className="factor-list">
+                                        {breakdown.relevance !== undefined && (
+                                            <div className="factor-item">
+                                                <div className="factor-header"><span>Relevance (30%)</span><span>{breakdown.relevance} / 30</span></div>
+                                                <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.relevance / 30) * 100) + '%' }}></div></div>
+                                            </div>
+                                        )}
+                                        {breakdown.trend_momentum !== undefined && (
+                                            <div className="factor-item">
+                                                <div className="factor-header"><span>Trend Momentum (25%)</span><span>{breakdown.trend_momentum} / 25</span></div>
+                                                <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.trend_momentum / 25) * 100) + '%' }}></div></div>
+                                            </div>
+                                        )}
+                                        {breakdown.audience_fit !== undefined && (
+                                            <div className="factor-item">
+                                                <div className="factor-header"><span>Audience Fit (20%)</span><span>{breakdown.audience_fit} / 20</span></div>
+                                                <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.audience_fit / 20) * 100) + '%' }}></div></div>
+                                            </div>
+                                        )}
+                                        {breakdown.engagement_potential !== undefined && (
+                                            <div className="factor-item">
+                                                <div className="factor-header"><span>Engagement Potential (15%)</span><span>{breakdown.engagement_potential} / 15</span></div>
+                                                <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.engagement_potential / 15) * 100) + '%' }}></div></div>
+                                            </div>
+                                        )}
+                                        {breakdown.content_gap !== undefined && (
+                                            <div className="factor-item">
+                                                <div className="factor-header"><span>Content Gap (10%)</span><span>{breakdown.content_gap} / 10</span></div>
+                                                <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: Math.min(100, (breakdown.content_gap / 10) * 100) + '%' }}></div></div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                                <div style={{ display: 'flex', gap: '12px' }}>
+                                    <button className="btn btn-primary" onClick={() => window.location.href = '#create'}>Create Content</button>
+                                    {sig.url && <a href={sig.url} target="_blank" rel="noreferrer" className="btn btn-secondary" style={{ textDecoration: 'none' }}>View Source ↗</a>}
                                 </div>
                             </div>
-                            <div style={{ display: 'flex', gap: '12px' }}>
-                                <button className="btn btn-primary">Create Content</button>
-                                <button className="btn btn-secondary">View Strategy</button>
-                            </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             )}
         </div>
@@ -2381,7 +2409,11 @@ function App() {
             ]);
             setPosts(postsRes.posts || []);
             setAccounts(accountsRes.accounts || []);
-            setSignals(signalsRes ? (signalsRes.signals || []) : []);
+            setSignals(
+                Array.isArray(signalsRes)
+                    ? signalsRes
+                    : (signalsRes?.signals || [])
+            );
             setAgentStatus(statusRes ? (Array.isArray(statusRes) ? statusRes : (statusRes.agents || [])) : []);
         } catch (err) {
             console.error('Failed to load:', err);
