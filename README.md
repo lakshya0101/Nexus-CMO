@@ -10,10 +10,22 @@
 
 Nexus CMO is not another content generator. It's an **AI-powered Chief Marketing Officer** — a self-hosted, multi-agent system that discovers what matters, decides what to say, creates branded content, validates it, publishes it, and learns from the results.
 
-```text
-DISCOVER → DECIDE → CREATE → REVIEW → PUBLISH → LEARN
-                                                    ↓
-                    ←──────────────────────────────
+### The Nexus Loop
+
+```
+┌───────────┐     ┌───────────┐     ┌───────────┐
+│  DISCOVER │ ──► │   DECIDE  │ ──► │   CREATE  │
+│   Scout   │     │  Planner  │     │  Creator  │
+└───────────┘     └───────────┘     └─────┬─────┘
+                                          │
+                                          ▼
+┌───────────┐     ┌───────────┐     ┌───────────┐
+│   LEARN   │ ◄── │  PUBLISH  │ ◄── │   REVIEW  │
+│  Analyst  │     │ Publisher │     │  Reviewer │
+└─────┬─────┘     └───────────┘     └───────────┘
+      │
+      │        Continuous Intelligence
+      └──────────────────────────────────────► DISCOVER
 ```
 
 From signal to insight, every component is connected in a self-improving loop.
@@ -36,41 +48,36 @@ From signal to insight, every component is connected in a self-improving loop.
 
 Nexus CMO is built around a specialized multi-agent architecture where every stage of the marketing lifecycle has a defined responsibility.
 
-```text
-                         NEXUS CMO
-                             │
-                    ┌────────┴────────┐
-                    │                 │
-                 Dashboard         FastAPI
-                    │             Orchestrator
-                    └────────┬────────┘
-                             │
-              ┌──────────────┼──────────────┐
-              │              │              │
-              ▼              ▼              ▼
-           SCOUT          PLANNER         CREATOR
-        Intelligence      Strategy        Content
-              │              │              │
-              └──────────────┼──────────────┘
-                             ▼
-                         REVIEWER
-                       Quality Gate
-                             │
-                             ▼
-                         PUBLISHER
-                         Distribution
-                             │
-                    ┌────────┼────────┐
-                    ▼        ▼        ▼
-                 LinkedIn    X     Instagram
-                    │        │        │
-                    └────────┼────────┘
-                             ▼
-                          ANALYST
-                       Performance
-                             │
-                             └──────────────►
-                              Next Intelligence Cycle
+```mermaid
+flowchart TD
+    Dashboard["Dashboard"]
+    API["FastAPI Orchestrator"]
+    Scout["Scout<br/>Intelligence"]
+    Planner["Planner<br/>Strategy"]
+    Creator["Creator<br/>Content"]
+    Reviewer["Reviewer<br/>Validation"]
+    Publisher["Publisher<br/>Distribution"]
+    Analyst["Analyst<br/>Learning"]
+    
+    Dashboard --> API
+    API --> Scout
+    API --> Planner
+    API --> Creator
+    Scout --> Planner
+    Planner --> Creator
+    Creator --> Reviewer
+    Reviewer --> Publisher
+    Publisher --> Analyst
+    Analyst -.-> Scout
+    
+    style Dashboard fill:#1f2937
+    style API fill:#374151
+    style Scout fill:#1e40af
+    style Planner fill:#1e40af
+    style Creator fill:#1e40af
+    style Reviewer fill:#f59e0b
+    style Publisher fill:#f59e0b
+    style Analyst fill:#16a34a
 ```
 
 ---
@@ -362,21 +369,29 @@ Nexus-CMO/
 
 ## Design Philosophy
 
-Nexus CMO follows four core principles that define its approach to autonomous marketing:
+Nexus CMO follows four core principles that define its approach to autonomous marketing.
 
-1. **Intelligence Before Execution**  
-   Do not publish simply because something can be published. Every decision is informed by data and context.
+```mermaid
+flowchart LR
+    A["Intelligence<br/>Before Execution"]
+    B["Specialization<br/>Before Generalization"]
+    C["Autonomy<br/>With Boundaries"]
+    D["Learning<br/>Over Repetition"]
+    Result["Autonomous Marketing<br/>Intelligence"]
+    
+    A --> Result
+    B --> Result
+    C --> Result
+    D --> Result
+    
+    style A fill:#3b82f6
+    style B fill:#8b5cf6
+    style C fill:#ec4899
+    style D fill:#f59e0b
+    style Result fill:#10b981
+```
 
-2. **Specialization Before Generalization**  
-   Give every agent a clear, focused responsibility rather than asking one system to do everything.
-
-3. **Autonomy With Boundaries**  
-   Automate aggressively and move fast, but validate before any consequential action.
-
-4. **Learning Over Repetition**  
-   Every execution should improve the next decision. The system learns and adapts over time.
-
-These principles combine to create **Autonomous Marketing Intelligence** — a system that executes marketing workflows while remaining accountable and controllable.
+These principles combine to create a system that executes marketing workflows while remaining accountable and controllable.
 
 ---
 
