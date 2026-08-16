@@ -10,22 +10,13 @@
 
 Nexus CMO is not another content generator. It's an **AI-powered Chief Marketing Officer** — a self-hosted, multi-agent system that discovers what matters, decides what to say, creates branded content, validates it, publishes it, and learns from the results.
 
-```mermaid
-graph LR
-    A["Discover"] --> B["Decide"]
-    B --> C["Create"]
-    C --> D["Review"]
-    D --> E["Publish"]
-    E --> F["Learn"]
-    F -.-> A
-    
-    style A fill:#2563eb,stroke:#1e40af,color:#fff
-    style B fill:#7c3aed,stroke:#6d28d9,color:#fff
-    style C fill:#db2777,stroke:#be185d,color:#fff
-    style D fill:#ea580c,stroke:#c2410c,color:#fff
-    style E fill:#16a34a,stroke:#15803d,color:#fff
-    style F fill:#0891b2,stroke:#0e7490,color:#fff
+```text
+DISCOVER → DECIDE → CREATE → REVIEW → PUBLISH → LEARN
+                                                    ↓
+                    ←──────────────────────────────
 ```
+
+From signal to insight, every component is connected in a self-improving loop.
 
 ---
 
@@ -43,211 +34,133 @@ graph LR
 
 ## Architecture
 
-Nexus CMO uses a **specialized multi-agent architecture** where each stage of the marketing lifecycle has its own intelligence.
+Nexus CMO is built around a specialized multi-agent architecture where every stage of the marketing lifecycle has a defined responsibility.
 
-```mermaid
-graph TB
-    UI["Dashboard & Control"]
-    API["FastAPI Orchestrator"]
-    
-    subgraph Intelligence["Intelligence Layer"]
-        Scout["Scout Agent<br/>Discovers signals"]
-        Planner["Planner Agent<br/>Strategizes approach"]
-        Creator["Creator Agent<br/>Generates content"]
-    end
-    
-    subgraph Execution["Execution Layer"]
-        Reviewer["Reviewer Agent<br/>Validates quality"]
-        Publisher["Publisher Agent<br/>Distributes content"]
-        Analyst["Analyst Agent<br/>Measures performance"]
-    end
-    
-    Platforms["Platform Integrations"]
-    
-    UI --> API
-    API --> Scout
-    API --> Planner
-    API --> Creator
-    Scout -.->|Intelligence| Planner
-    Planner -.->|Strategy| Creator
-    Creator --> Reviewer
-    Reviewer --> Publisher
-    Publisher --> Platforms
-    Platforms --> Analyst
-    Analyst -.->|Insights| Scout
-    
-    style UI fill:#f0f9ff,stroke:#0284c7,color:#0c4a6e
-    style API fill:#f0f9ff,stroke:#0284c7,color:#0c4a6e
-    style Intelligence fill:#dcfce7,stroke:#16a34a,color:#15803d
-    style Execution fill:#fef3c7,stroke:#d97706,color:#92400e
-    style Scout fill:#dbeafe,stroke:#0284c7
-    style Planner fill:#dbeafe,stroke:#0284c7
-    style Creator fill:#dbeafe,stroke:#0284c7
-    style Reviewer fill:#fde68a,stroke:#d97706
-    style Publisher fill:#fde68a,stroke:#d97706
-    style Analyst fill:#fde68a,stroke:#d97706
-    style Platforms fill:#fccf8f,stroke:#ea580c,color:#fff
+```text
+                         NEXUS CMO
+                             │
+                    ┌────────┴────────┐
+                    │                 │
+                 Dashboard         FastAPI
+                    │             Orchestrator
+                    └────────┬────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              │              │              │
+              ▼              ▼              ▼
+           SCOUT          PLANNER         CREATOR
+        Intelligence      Strategy        Content
+              │              │              │
+              └──────────────┼──────────────┘
+                             ▼
+                         REVIEWER
+                       Quality Gate
+                             │
+                             ▼
+                         PUBLISHER
+                         Distribution
+                             │
+                    ┌────────┼────────┐
+                    ▼        ▼        ▼
+                 LinkedIn    X     Instagram
+                    │        │        │
+                    └────────┼────────┘
+                             ▼
+                          ANALYST
+                       Performance
+                             │
+                             └──────────────►
+                              Next Intelligence Cycle
 ```
 
 ---
 
 ## The Six Agents
 
-### Scout
-Continuously monitors signals worth acting on:
-- AI & technology news
-- RSS feeds & Hacker News
-- GitHub activity & emerging topics
-- Industry trends
-
-### Planner
-Evaluates signals and decides:
-- What deserves attention
-- Which audience to target
-- Platform selection
-- Content format & timing
-
-### Creator
-Transforms strategy into production-ready content:
-- Platform-specific adaptations
-- Brand-consistent messaging
-- Visual asset generation
-- Optimized CTAs & hashtags
-
-### Reviewer
-Quality & safety validation gate:
-- Brand voice consistency
-- Claim verification
-- Credential protection
-- Platform suitability
-- Risk assessment
-
-### Publisher
-Handles multi-platform distribution:
-- LinkedIn, X, Facebook, Instagram
-- Discord, Reddit, Medium, Substack
-- Email platforms (Brevo, MailerLite)
-- Webhook integrations
-
-### Analyst
-Closes the intelligence loop:
-- Performance tracking
-- Insight generation
-- Strategy recommendations
-- Continuous optimization
+| Agent | Role | Core Responsibility |
+|---|---|---|
+| **Scout** | Intelligence | Discovers trends, news, GitHub activity and emerging signals |
+| **Planner** | Strategy | Determines audience, platform, format and timing |
+| **Creator** | Production | Generates platform-specific branded content and visuals |
+| **Reviewer** | Governance | Validates quality, claims, brand voice and publishing risks |
+| **Publisher** | Execution | Distributes approved content across connected platforms |
+| **Analyst** | Learning | Measures performance and feeds insights into the next cycle |
 
 ---
 
 ## The Workflow
 
-```mermaid
-sequenceDiagram
-    participant Scout
-    participant Planner
-    participant Creator
-    participant Reviewer
-    participant Publisher
-    participant Platforms
-    participant Analyst
+**Step 1: Signal Detection**  
+Scout continuously monitors signals and identifies marketing opportunities.
 
-    Scout->>Planner: Signal detected
-    Planner->>Creator: Strategy defined
-    Creator->>Reviewer: Content ready
-    Reviewer->>Reviewer: Validate quality
-    alt Approved
-        Reviewer->>Publisher: Clear to publish
-        Publisher->>Platforms: Distribute content
-        Platforms->>Analyst: Performance data
-        Analyst->>Scout: Insights for next cycle
-    else Rejected
-        Reviewer->>Creator: Revision needed
-        Creator->>Reviewer: Updated content
-    end
-```
+**Step 2: Strategy Definition**  
+Planner evaluates signals and determines what to say, where, when, and to whom.
+
+**Step 3: Content Generation**  
+Creator produces platform-specific content while maintaining brand consistency.
+
+**Step 4: Quality Validation**  
+Reviewer validates content for quality, claims, brand voice and safety.
+
+**Step 5: Approval Decision**
+- **Approved**: Content moves to Publisher
+- **Rejected**: Content returns to Creator with revision notes
+
+**Step 6: Distribution**  
+Publisher distributes approved content across all connected platforms.
+
+**Step 7: Performance Tracking**  
+Analyst monitors engagement, reach and performance metrics.
+
+**Step 8: Learning Loop**  
+Insights are fed back to Scout for smarter future decisions.
 
 ---
 
 ## Brand Intelligence
 
-Nexus CMO maintains a **Brand Kit** that acts as a shared context layer across all agents:
+Nexus CMO maintains a **Brand Kit** that acts as a shared context layer across all agents. This ensures every piece of content—whether written or visual—reflects your brand identity.
 
-```mermaid
-graph TB
-    Brand["Brand Configuration"]
-    
-    subgraph Identity["Visual Identity"]
-        Logo["Logo & Colors"]
-        Type["Typography"]
-    end
-    
-    subgraph Voice["Brand Voice"]
-        Tone["Tone & Style"]
-        Messaging["Core Messages"]
-        CTA["Calls to Action"]
-    end
-    
-    subgraph Rules["Content Rules"]
-        Forbidden["Forbidden Styles"]
-        Hashtags["Hashtag Strategy"]
-        Products["Product URLs"]
-    end
-    
-    Brand --> Identity
-    Brand --> Voice
-    Brand --> Rules
-    
-    Identity & Voice & Rules --> AI["AI Content Generation"]
-    AI --> Output["Brand-Consistent Output"]
-    
-    style Brand fill:#6366f1,color:#fff
-    style AI fill:#a855f7,color:#fff
-    style Output fill:#ec4899,color:#fff
-```
+### Brand Kit Components
+
+| Category | Elements |
+|---|---|
+| **Visual Identity** | Logo, primary colors, secondary colors, typography system |
+| **Brand Voice** | Tone, writing style, core messaging, calls-to-action |
+| **Content Rules** | Forbidden styles, hashtag strategy, product URLs, platform preferences |
+
+All agents reference the Brand Kit during decision-making and content creation, ensuring consistency across every platform and format.
 
 ---
 
 ## Technology Stack
 
-```mermaid
-graph LR
-    subgraph Backend["Backend"]
-        Python["Python 3"]
-        FastAPI["FastAPI"]
-        SQLite["SQLite"]
-        APScheduler["APScheduler"]
-    end
-    
-    subgraph AI["AI & Inference"]
-        Ollama["Ollama (Local)"]
-        OpenAI["OpenAI API"]
-        Anthropic["Anthropic API"]
-        Gemini["Google Gemini API"]
-    end
-    
-    subgraph Automation["Automation & Creative"]
-        Playwright["Playwright"]
-        Pillow["Pillow"]
-        FFmpeg["FFmpeg"]
-        HeyGen["HeyGen API"]
-    end
-    
-    subgraph Frontend["Frontend"]
-        React["React"]
-        Dashboard["Interactive Dashboard"]
-    end
-    
-    subgraph Security["Security"]
-        Encryption["Fernet Encryption"]
-        Logging["Audit Logging"]
-        Gates["Approval Gates"]
-    end
-    
-    style Backend fill:#3b82f6,color:#fff
-    style AI fill:#8b5cf6,color:#fff
-    style Automation fill:#ec4899,color:#fff
-    style Frontend fill:#f59e0b,color:#fff
-    style Security fill:#10b981,color:#fff
-```
+### Backend & Orchestration
+- **Python 3** — Core language
+- **FastAPI** — API and orchestration layer
+- **SQLite** — Local data storage
+- **APScheduler** — Autonomous task scheduling
+
+### AI & Inference
+- **Ollama** — Local LLM hosting
+- **OpenAI** — GPT-4 and text models
+- **Anthropic** — Claude API integration
+- **Google Gemini** — Gemini API support
+
+### Automation & Creative
+- **Playwright** — Browser automation for publishing
+- **Pillow** — Image processing and generation
+- **FFmpeg** — Video and media handling
+- **HeyGen** — Video content creation API
+
+### Frontend
+- **React** — Interactive dashboard
+- **HTML/CSS** — UI design and layout
+
+### Security
+- **Fernet Encryption** — Credential protection
+- **Audit Logging** — Action tracking and compliance
+- **Approval Gates** — Content validation before publication
 
 ---
 
@@ -263,7 +176,7 @@ graph LR
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/yourusername/Nexus-CMO.git
+git clone https://github.com/lakshya0101/Nexus-CMO.git
 cd Nexus-CMO
 ```
 
@@ -337,36 +250,21 @@ No external API keys, no data leaving your infrastructure.
 
 ## API Endpoints
 
-```mermaid
-graph LR
-    GET1["GET /api/health"]
-    POST1["POST /api/pipeline/run"]
-    GET2["GET /api/pipeline/status"]
-    GET3["GET /api/pipeline/queue"]
-    POST2["POST /api/pipeline/approve/:id"]
-    POST3["POST /api/pipeline/reject/:id"]
-    
-    GET4["GET /api/pipeline/signals"]
-    GET5["GET /api/pipeline/analytics"]
-    GET6["GET /api/brand/config"]
-    PUT1["PUT /api/brand/config"]
-    
-    POST1 -.-> GET2
-    GET2 -.-> GET3
-    GET3 -.-> POST2 & POST3
-    GET4 -.-> GET5
-    GET6 -.-> PUT1
-    
-    style GET1 fill:#10b981
-    style POST1 fill:#3b82f6
-    style GET2 fill:#10b981
-    style GET3 fill:#10b981
-    style POST2 fill:#f59e0b
-    style POST3 fill:#ef4444
-    
-    classDef endpoint fill:#e0e7ff,stroke:#818cf8
-    class GET4,GET5,GET6,PUT1 endpoint
-```
+| Endpoint | Method | Purpose |
+|---|---|---|
+| `/api/health` | GET | Health check and system status |
+| `/api/pipeline/run` | POST | Trigger the autonomous pipeline manually |
+| `/api/pipeline/status` | GET | View current pipeline state |
+| `/api/pipeline/queue` | GET | View content approval queue |
+| `/api/pipeline/approve/{id}` | POST | Approve queued content |
+| `/api/pipeline/reject/{id}` | POST | Reject and return content for revision |
+| `/api/pipeline/publish/{id}` | POST | Publish approved content |
+| `/api/pipeline/signals` | GET | Retrieve discovered intelligence signals |
+| `/api/pipeline/analytics` | GET | Retrieve performance analytics and insights |
+| `/api/brand/config` | GET/PUT | Manage brand configuration |
+| `/api/accounts` | GET/POST | Manage platform account integrations |
+| `/api/posts` | GET/POST | Manage published posts and content |
+| `/docs` | GET | Interactive API documentation (Swagger UI) |
 
 **Interactive API Explorer**: Visit `/docs` after starting the server.
 
@@ -374,26 +272,18 @@ graph LR
 
 ## Execution Timeline
 
-```mermaid
-timeline
-    title Daily Nexus CMO Autonomous Execution
-    
-    section Morning
-    08:00 : Scout discovers new signals
-         : Planner identifies opportunities
-    11:00 : Creator generates content
-         : Reviewer validates
+### Daily Autonomous Marketing Cycle
 
-    section Afternoon
-    14:00 : Scout refreshes intelligence
-    
-    section Evening
-    23:00 : Publisher distributes approved content
-    23:30 : Analyst generates insights
-
-    section Next Day
-    Loop : Better intelligence to better decisions
-```
+| Time | Agent | Action |
+|---|---|---|
+| **08:00** | Scout | Discovers new signals and emerging opportunities |
+| **08:00** | Planner | Evaluates signals and identifies strategic opportunities |
+| **11:00** | Creator | Generates platform-specific branded content |
+| **11:00** | Reviewer | Validates content quality, claims and brand rules |
+| **14:00** | Scout | Refreshes intelligence and discovers new signals |
+| **23:00** | Publisher | Distributes approved content across platforms |
+| **23:30** | Analyst | Generates performance insights and recommendations |
+| **Next Cycle** | Nexus CMO | Feeds insights back into the intelligence loop |
 
 ---
 
@@ -472,27 +362,21 @@ Nexus-CMO/
 
 ## Design Philosophy
 
-```mermaid
-graph TB
-    A["Intelligence<br/>before execution"]
-    B["Specialization<br/>before generalization"]
-    C["Autonomy<br/>with boundaries"]
-    D["Learning<br/>over repetition"]
-    
-    A --> Core["Nexus CMO<br/>Core Principles"]
-    B --> Core
-    C --> Core
-    D --> Core
-    
-    Core --> Result["Autonomous<br/>Marketing Intelligence"]
-    
-    style A fill:#3b82f6,color:#fff
-    style B fill:#8b5cf6,color:#fff
-    style C fill:#ec4899,color:#fff
-    style D fill:#f59e0b,color:#fff
-    style Core fill:#10b981,color:#fff,stroke:#059669,stroke-width:3px
-    style Result fill:#06b6d4,color:#fff
-```
+Nexus CMO follows four core principles that define its approach to autonomous marketing:
+
+1. **Intelligence Before Execution**  
+   Do not publish simply because something can be published. Every decision is informed by data and context.
+
+2. **Specialization Before Generalization**  
+   Give every agent a clear, focused responsibility rather than asking one system to do everything.
+
+3. **Autonomy With Boundaries**  
+   Automate aggressively and move fast, but validate before any consequential action.
+
+4. **Learning Over Repetition**  
+   Every execution should improve the next decision. The system learns and adapts over time.
+
+These principles combine to create **Autonomous Marketing Intelligence** — a system that executes marketing workflows while remaining accountable and controllable.
 
 ---
 
@@ -529,22 +413,42 @@ Nexus CMO represents a fundamental shift in how AI can approach marketing:
 
 From the first signal to the final performance insight, every component is connected in a self-improving loop.
 
-```mermaid
-graph LR
-    Start["Raw Signals"] 
-    Start --> Process["Intelligent Processing"]
-    Process --> Action["Strategic Execution"]
-    Action --> Measure["Performance Measurement"]
-    Measure --> Learn["Continuous Learning"]
-    Learn --> Improve["Better Decisions"]
-    Improve --> Start
-    
-    style Start fill:#0891b2,color:#fff
-    style Process fill:#7c3aed,color:#fff
-    style Action fill:#db2777,color:#fff
-    style Measure fill:#ea580c,color:#fff
-    style Learn fill:#16a34a,color:#fff
-    style Improve fill:#2563eb,color:#fff
+```text
+┌──────────────┐
+│ Raw Signals  │
+└──────┬───────┘
+       │
+       ▼
+┌──────────────────────┐
+│ Intelligent          │
+│ Processing           │
+└──────┬───────────────┘
+       │
+       ▼
+┌──────────────────────┐
+│ Strategic            │
+│ Execution            │
+└──────┬───────────────┘
+       │
+       ▼
+┌──────────────────────┐
+│ Performance          │
+│ Measurement          │
+└──────┬───────────────┘
+       │
+       ▼
+┌──────────────────────┐
+│ Continuous           │
+│ Learning             │
+└──────┬───────────────┘
+       │
+       ▼
+┌──────────────────────┐
+│ Better               │
+│ Decisions            │
+└──────┬───────────────┘
+       │
+       └────────────────→ REPEAT
 ```
 
 ---
