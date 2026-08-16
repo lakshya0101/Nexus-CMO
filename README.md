@@ -1,158 +1,118 @@
-# SocialFlow — AI-Powered Autonomous Social Media CMO
+# ⚡ Nexus CMO
 
-Self-hosted, open-source AI CMO that handles everything from news discovery to content generation, scheduling, and publishing across 12 platforms. Add your social media logins once, and AI handles the rest.
+### AI-Powered Command Center for Autonomous Marketing Intelligence
 
-**No monthly fees. No API limits on content. Your data stays on your machine.**
+> **Nexus CMO transforms fragmented marketing signals into actionable intelligence through a cinematic, real-time command center.**
 
-## Why SocialFlow?
+Nexus CMO is an AI-powered marketing intelligence platform designed to give teams a single operational view of their marketing ecosystem.
 
-| Feature | SocialRails ($29-99/mo) | SocialFlow (FREE) |
-|---------|------------------------|-------------------|
-| Platforms | 9 | 12 (+ Discord, Reddit, Medium, Substack) |
-| AI content | Capped (20-250/mo) | Unlimited (Ollama local AI) |
-| Image gen | Monthly cap | GPT Image 1.5 (pay-per-use ~$0.02) |
-| Content pipeline | Manual | Autonomous (AI finds, writes, posts) |
-| Multi-agent | No | 6 agents (Scout, Planner, Creator, Reviewer, Publisher, Analyst) |
-| Brand kit | Basic | Full (colors, logo, fonts, tone, forbidden styles) |
-| Approval gates | No | Credential safety, brand voice, claim validation |
-| Data ownership | Their cloud | Your machine, encrypted locally |
-| Source code | Closed | Open-source |
+Instead of forcing marketers to jump between dashboards, analytics tools, research platforms, and agent interfaces, Nexus CMO brings the intelligence layer together into one unified command center.
 
-## Quick Start
+The platform continuously consumes intelligence from connected backend services and presents it through a premium, high-signal interface built around three core experiences:
 
-```bash
-cd backend
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-playwright install chromium
-python main.py
-# Dashboard at http://localhost:8000
-```
+**Command Center → Opportunity Radar → Agent Network**
 
-## Architecture: 6-Agent Autonomous Pipeline
+---
 
-```
-Scout → Planner → Creator → Reviewer → Publisher → Analyst
-```
+## ✨ Why Nexus CMO?
 
-| Agent | Role | Schedule |
-|-------|------|----------|
-| **Scout** | Fetch AI news (HN, RSS), scan GitHub repos, detect trends | 8 AM, 2 PM, 8 PM |
-| **Planner** | Decide what to post, which platform, what format, when | After Scout |
-| **Creator** | Generate platform-specific content + branded images | After Planner |
-| **Reviewer** | Quality gates: credential safety, brand voice, claims | After Creator |
-| **Publisher** | Post via Playwright browser automation or API | 11 AM, 11 PM |
-| **Analyst** | Track performance, generate reports, feed insights back | End of day |
+Modern marketing teams deal with an overwhelming amount of information:
 
-## Supported Platforms (12)
+- Market signals
+- Customer behavior
+- Competitive movements
+- Emerging opportunities
+- Campaign intelligence
+- AI-generated recommendations
+- Agent activity
 
-| Platform | Method | Auth |
-|----------|--------|------|
-| LinkedIn | Playwright browser | Session persist |
-| X / Twitter | Playwright browser | Session persist |
-| Facebook | Playwright browser | Session persist |
-| Instagram | Playwright browser | Session persist |
-| Discord | Webhook (HTTP) | Webhook URL |
-| Reddit | PRAW API | OAuth credentials |
-| Medium | Playwright browser | Session persist |
-| Substack | Playwright browser | Session persist |
-| HeyGen | Playwright browser | Session persist |
-| beehiiv | Playwright browser | Session persist |
-| MailerLite | Playwright browser | Session persist |
-| Brevo | Playwright browser | Session persist |
+The problem isn't lack of data.
 
-## AI Providers
+**The problem is turning data into decisions.**
 
-| Provider | Cost | Setup |
-|----------|------|-------|
-| **Ollama** (default) | FREE | `ollama serve` + `ollama pull qwen3:8b` |
-| OpenAI | Pay-per-use | Add `OPENAI_API_KEY` to `.env` |
-| Anthropic | Pay-per-use | Add `ANTHROPIC_API_KEY` to `.env` |
-| Google Gemini | Free tier | Add `GEMINI_API_KEY` to `.env` |
+Nexus CMO is designed around this principle:
 
-## Image Generation
+> **Collect → Understand → Prioritize → Act**
 
-Uses **GPT Image 1.5** (OpenAI's latest, replaces deprecated DALL-E 3):
-- 75% cheaper than DALL-E 3 (~$0.015-0.020 per image)
-- Brand-aware: auto-injects your colors, fonts, and style rules
-- Platform-optimized sizes (landscape for LinkedIn/X, square for IG, portrait for stories)
-- Carousel generation: 5-slide branded carousels via Pillow
+The result is a centralized intelligence layer where marketers can understand what is happening, identify opportunities, and observe AI agents working across the system.
 
-## Brand Kit
+---
 
-Configure your brand identity from the dashboard:
-- **Colors**: Primary, secondary, dark background, accents
-- **Logo**: Upload once, auto-applied to carousels and watermarks
-- **Typography**: Font family, heading/body weights
-- **Tone**: AI content follows your voice ("clear, direct, practical")
-- **Forbidden styles**: Block unwanted aesthetics in image generation
-- **Hashtags**: Platform-specific hashtag presets
-- **CTAs**: Reusable call-to-action templates
-- **Products**: Auto-link insertion for your product URLs
+# 🚀 Core Experience
 
-## API Endpoints
+## 🎯 Command Center
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/health` | GET | Server health check |
-| `/api/pipeline/run` | POST | Trigger full autonomous pipeline |
-| `/api/pipeline/status` | GET | Current pipeline state |
-| `/api/pipeline/queue` | GET | Content queue (drafts, approved, posted) |
-| `/api/pipeline/approve/{id}` | POST | Approve a draft post |
-| `/api/pipeline/reject/{id}` | POST | Reject a post |
-| `/api/pipeline/publish/{id}` | POST | Publish a specific post now |
-| `/api/pipeline/signals` | GET | Intelligence signals from Scout |
-| `/api/pipeline/analytics` | GET | Daily/weekly performance stats |
-| `/api/brand/config` | GET/PUT | Brand kit configuration |
-| `/api/brand/logo` | POST | Upload brand logo |
-| `/api/brand/colors` | GET | Brand color palette |
-| `/api/accounts` | GET/POST | Manage platform credentials |
-| `/api/posts` | GET/POST | Manage posts |
-| `/api/openclaw/publish` | POST | Bridge API for external pipelines |
-| `/docs` | GET | Interactive Swagger API docs |
+The central operational dashboard for marketing intelligence.
 
-## Security
+The Command Center provides a high-level view of the system while keeping the interface focused on information that actually comes from the backend.
 
-- Credentials encrypted with **Fernet (AES-128-CBC)** — stored locally, never transmitted
-- Browser sessions persisted in local `sessions/` directory
-- Approval gates catch credential/PII leaks before publishing
-- All actions logged with timestamps for audit trail
-- No cloud dependency — everything runs on your machine
+Rather than displaying fabricated metrics or placeholder intelligence, Nexus CMO reflects the current API state.
 
-## Configuration
+### Highlights
 
-Copy `.env.example` to `.env` and configure:
+- Real-time intelligence state
+- Agent status visibility
+- Marketing signal overview
+- Operational summaries
+- High-signal dashboard layout
+- Graceful empty states
+- Connection-aware UI
 
-```env
-AI_PROVIDER=ollama              # ollama (free), openai, anthropic, gemini
-OLLAMA_URL=http://127.0.0.1:11434
-OLLAMA_MODEL=qwen3:8b
-IMAGE_MODEL=gpt-image-1.5      # Replaces deprecated DALL-E 3
-OPENAI_API_KEY=                 # Only needed for image generation
-HEADLESS=false                  # true for server mode (no browser windows)
-```
+---
 
-## Schedule (Automatic)
+## 📡 Opportunity Radar
 
-| Time | What Happens |
-|------|-------------|
-| 8:07 AM | Full pipeline: news fetch → content generation → review |
-| 11:00 AM | Publish approved LinkedIn + X posts |
-| 2:00 PM | Afternoon news refresh |
-| 11:00 PM | Publish remaining approved posts |
-| 11:30 PM | Daily analytics report |
+A dedicated intelligence surface for discovering potential marketing opportunities.
 
-## Tech Stack
+The radar consumes signals from the backend and presents opportunities when genuine intelligence is available.
 
-- **Backend**: Python 3, FastAPI, SQLite, APScheduler
-- **Browser Automation**: Playwright (Chromium)
-- **AI**: Ollama (local), OpenAI, Anthropic, Google Gemini
-- **Images**: GPT Image 1.5, Pillow (carousels)
-- **Video**: FFmpeg (reels), HeyGen (avatar videos)
-- **Frontend**: React (single HTML), Tailwind-inspired CSS
-- **Security**: Fernet encryption, local-only credentials
+When no opportunities are available, the interface doesn't fabricate numbers or recommendations.
 
-## License
+Instead, it communicates the actual system state:
 
-MIT License. Built by [InBharat AI](https://inbharat.ai).
+> **"No opportunities detected yet. Nexus CMO is scanning your intelligence sources."**
+
+This keeps the product trustworthy while remaining visually polished.
+
+---
+
+## 🤖 Agent Network
+
+The Agent Network provides visibility into the AI agents operating within the Nexus CMO ecosystem.
+
+The interface reflects the actual agent state returned by the backend.
+
+### Agent states include:
+
+- Online
+- Active
+- Offline
+- Connection unavailable
+
+This creates an operational layer where users can understand not only **what the system knows**, but also **what the agents are doing**.
+
+---
+
+# 🧠 Intelligence-First Architecture
+
+Nexus CMO follows a centralized data-flow architecture.
+
+```text
+                    ┌──────────────────────┐
+                    │      Backend API     │
+                    └──────────┬───────────┘
+                               │
+                     ┌─────────▼─────────┐
+                     │    App State      │
+                     │                   │
+                     │ • signals         │
+                     │ • agentStatus     │
+                     └─────────┬─────────┘
+                               │
+             ┌─────────────────┼─────────────────┐
+             │                 │                 │
+             ▼                 ▼                 ▼
+      ┌─────────────┐   ┌───────────────┐  ┌─────────────┐
+      │  Command    │   │  Opportunity  │  │   Agent     │
+      │   Center    │   │     Radar     │  │   Network   │
+      └─────────────┘   └───────────────┘  └─────────────┘
