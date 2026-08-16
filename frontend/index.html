@@ -1410,7 +1410,7 @@ function Analytics() {
                                         {carousel.slides.map((slide, i) => (
                                             <div key={i} style={{ background: 'var(--bg-dark)', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)' }}>
                                                 {slide.image_url ? (
-                                                    <img src={`http://localhost:8000${slide.image_url}`} alt={`Slide ${i+1}`} style={{ width: '100%', aspectRatio: '1', objectFit: 'cover' }} />
+                                                    <img src={slide.image_url.startsWith('http') || slide.image_url.startsWith('/') ? slide.image_url : `/${slide.image_url}`} alt={`Slide ${i+1}`} style={{ width: '100%', aspectRatio: '1', objectFit: 'cover' }} />
                                                 ) : (
                                                     <div style={{ aspectRatio: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--danger)', fontSize: '11px' }}>⚠️ Failed</div>
                                                 )}
@@ -1750,7 +1750,7 @@ function Analytics() {
                 const formData = new FormData();
                 formData.append('file', file);
                 
-                const response = await fetch('http://localhost:8000/api/upload-avatar-photo', {
+                const response = await fetch(`${API}/upload-avatar-photo`, {
                     method: 'POST',
                     body: formData
                 });
@@ -1807,7 +1807,7 @@ function Analytics() {
                 const formData = new FormData();
                 formData.append('file', file);
                 
-                const response = await fetch('http://localhost:8000/api/upload-audio', {
+                const response = await fetch(`${API}/upload-audio`, {
                     method: 'POST',
                     body: formData
                 });

@@ -15,7 +15,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
 
-from fastapi import FastAPI, HTTPException, BackgroundTasks, UploadFile, File, Form
+from fastapi import FastAPI, HTTPException, BackgroundTasks, UploadFile, File, Form, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -1322,7 +1322,7 @@ Return ONLY the script text that will be spoken. No formatting, no stage directi
 
 
 @app.post("/api/upload-avatar-photo")
-async def upload_avatar_photo(file: UploadFile = File(...)):
+async def upload_avatar_photo(request: Request, file: UploadFile = File(...)):
     """Upload photo for avatar generation"""
     
     # Validate file type
@@ -1338,17 +1338,18 @@ async def upload_avatar_photo(file: UploadFile = File(...)):
         content = await file.read()
         f.write(content)
     
+    base_url = str(request.base_url).rstrip("/")
     return {
         "success": True,
         "filename": filename,
         "path": str(filepath),
         "url": f"/uploads/{filename}",
-        "full_url": f"http://localhost:8000/uploads/{filename}"
+        "full_url": f"{base_url}/uploads/{filename}"
     }
 
 
 @app.post("/api/upload-audio")
-async def upload_audio(file: UploadFile = File(...)):
+async def upload_audio(request: Request, file: UploadFile = File(...)):
     """Upload audio for avatar/lip-sync"""
     
     allowed_types = ["audio/mpeg", "audio/wav", "audio/mp3", "audio/x-wav", "audio/ogg"]
@@ -1362,12 +1363,13 @@ async def upload_audio(file: UploadFile = File(...)):
         content = await file.read()
         f.write(content)
     
+    base_url = str(request.base_url).rstrip("/")
     return {
         "success": True,
         "filename": filename,
         "path": str(filepath),
         "url": f"/uploads/{filename}",
-        "full_url": f"http://localhost:8000/uploads/{filename}"
+        "full_url": f"{base_url}/uploads/{filename}"
     }
 
 # --- Posts CRUD ---
