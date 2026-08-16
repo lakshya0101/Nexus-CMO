@@ -565,6 +565,21 @@
         };
 
         // Platform icons
+                const Icons = {
+            overview: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>,
+            radar: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
+            network: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>,
+            spark: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>,
+            layers: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg>,
+            video: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>,
+            userVideo: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>,
+            library: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,
+            chart: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
+            users: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
+            gear: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
+            check: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
+            trash: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        };
         const icons = {
             linkedin: '💼',
             instagram: '📸',
@@ -684,13 +699,32 @@ function Landing({ onEnter }) {
     );
 }
 
-function CommandCenter({ posts, accounts }) {
+function CommandCenter({ posts, accounts, signals, agentStatus }) {
     const stats = {
-        signals: 24,
-        opportunities: 8,
-        content: posts.length || 17,
-        network: 'ONLINE'
+        signals: signals ? signals.length : 0,
+        opportunities: signals ? signals.filter(s => s.score >= 80).length : 0,
+        content: posts ? posts.length : 0,
+        network: (agentStatus && agentStatus.some(a => a.status === 'Active' || a.status === 'Ready')) ? 'ONLINE' : 'OFFLINE'
     };
+    
+    const topSignal = signals && signals.length > 0 ? signals[0] : null;
+
+    const defaultPipeline = [
+        { name: 'Scout', role: 'Trend Intelligence' },
+        { name: 'Planner', role: 'Content Strategy' },
+        { name: 'Creator', role: 'Content Gen' },
+        { name: 'Reviewer', role: 'Quality Control' },
+        { name: 'Publisher', role: 'Distribution' },
+        { name: 'Analyst', role: 'Learning' },
+    ];
+    
+    const pipeline = defaultPipeline.map(agent => {
+        const backendAgent = Array.isArray(agentStatus) ? agentStatus.find(a => a.name.toLowerCase() === agent.name.toLowerCase()) : null;
+        return {
+            ...agent,
+            status: backendAgent ? backendAgent.status : 'Offline'
+        };
+    });
 
     return (
         <div>
@@ -716,84 +750,96 @@ function CommandCenter({ posts, accounts }) {
                 </div>
                 <div className="stat-card">
                     <div className="stat-label">Network Status</div>
-                    <div className="stat-value" style={{ color: 'var(--success)' }}>{stats.network}</div>
+                    <div className="stat-value" style={{ color: stats.network === 'ONLINE' ? 'var(--success)' : 'var(--text-muted)' }}>{stats.network}</div>
                 </div>
             </div>
 
-            <div className="card">
-                <div className="card-title">🎯 OPPORTUNITY RADAR</div>
-                <div className="radar-score-container">
-                    <div className="radar-circle">
-                        <div className="radar-score">81</div>
-                        <div className="radar-label">HIGH</div>
-                    </div>
-                    <div className="factor-list">
-                        <div className="factor-item">
-                            <div className="factor-header"><span>Relevance</span><span>85%</span></div>
-                            <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: '85%' }}></div></div>
+            {topSignal ? (
+                <div className="card">
+                    <div className="card-title"><span style={{ display: 'inline-flex', verticalAlign: 'middle', marginRight: '8px', color: 'var(--accent)' }}>{Icons.radar}</span> OPPORTUNITY RADAR</div>
+                    <div className="radar-score-container">
+                        <div className="radar-circle">
+                            <div className="radar-score">{topSignal.score || 0}</div>
+                            <div className="radar-label">{topSignal.score > 80 ? 'HIGH' : topSignal.score > 50 ? 'MED' : 'LOW'}</div>
                         </div>
-                        <div className="factor-item">
-                            <div className="factor-header"><span>Trend Momentum</span><span>92%</span></div>
-                            <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: '92%' }}></div></div>
-                        </div>
-                        <div className="factor-item">
-                            <div className="factor-header"><span>Audience Fit</span><span>78%</span></div>
-                            <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: '78%' }}></div></div>
+                        <div className="factor-list">
+                            {topSignal.relevance !== undefined && (
+                                <div className="factor-item">
+                                    <div className="factor-header"><span>Relevance</span><span>{topSignal.relevance}%</span></div>
+                                    <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: topSignal.relevance + '%' }}></div></div>
+                                </div>
+                            )}
+                            {topSignal.momentum !== undefined && (
+                                <div className="factor-item">
+                                    <div className="factor-header"><span>Trend Momentum</span><span>{topSignal.momentum}%</span></div>
+                                    <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: topSignal.momentum + '%' }}></div></div>
+                                </div>
+                            )}
+                            {topSignal.audience_fit !== undefined && (
+                                <div className="factor-item">
+                                    <div className="factor-header"><span>Audience Fit</span><span>{topSignal.audience_fit}%</span></div>
+                                    <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: topSignal.audience_fit + '%' }}></div></div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
-            </div>
+            ) : (
+                 <div className="card">
+                    <div className="card-title"><span style={{ display: 'inline-flex', verticalAlign: 'middle', marginRight: '8px', color: 'var(--accent)' }}>{Icons.radar}</span> OPPORTUNITY RADAR</div>
+                    <div className="empty-state" style={{ padding: '20px' }}>
+                        <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.radar}</div>
+                        <p>No opportunities discovered yet.</p>
+                    </div>
+                 </div>
+            )}
 
             <div className="card">
-                <div className="card-title">🤖 AI CMO NETWORK</div>
+                <div className="card-title"><span style={{ display: 'inline-flex', verticalAlign: 'middle', marginRight: '8px', color: 'var(--accent)' }}>{Icons.network}</span> AI CMO NETWORK</div>
                 <div className="agent-network">
                     <div className="agent-line"></div>
-                    
-                    {[
-                        { name: 'Scout', role: 'Trend Intelligence', status: 'Active', class: 'status-active' },
-                        { name: 'Planner', role: 'Content Strategy', status: 'Ready', class: 'status-ready' },
-                        { name: 'Creator', role: 'Content Gen', status: 'Ready', class: 'status-ready' },
-                        { name: 'Reviewer', role: 'Quality Control', status: 'Ready', class: 'status-ready' },
-                        { name: 'Publisher', role: 'Distribution', status: 'Ready', class: 'status-ready' },
-                        { name: 'Analyst', role: 'Learning', status: 'Monitoring', class: 'status-ready' },
-                    ].map((agent, i) => (
-                        <div className={`agent-node ${agent.status === 'Active' ? 'active' : ''}`} key={i}>
-                            <div className="agent-name">{agent.name}</div>
-                            <div className="agent-role">{agent.role}</div>
-                            <div className={`agent-status ${agent.class}`}>● {agent.status}</div>
-                        </div>
-                    ))}
+                    {pipeline.map((agent, i) => {
+                        const isActive = agent.status === 'Active' || agent.status === 'Monitoring' || agent.status === 'Ready';
+                        const statusClass = isActive ? (agent.status === 'Active' ? 'status-active' : 'status-ready') : '';
+                        return (
+                            <div className={`agent-node ${isActive ? 'active' : ''}`} key={i}>
+                                <div className="agent-name">{agent.name}</div>
+                                <div className="agent-role">{agent.role}</div>
+                                <div className={`agent-status ${statusClass}`}>● {agent.status}</div>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
             
             <div className="grid-2">
                 <div className="card">
-                    <div className="card-title">🧠 RECENT INTELLIGENCE</div>
-                    <div className="post-item" style={{ marginBottom: '12px', padding: '16px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                            <span style={{ fontSize: '11px', color: 'var(--accent)', fontWeight: '700' }}>TREND DETECTED</span>
-                            <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>2h ago</span>
+                    <div className="card-title"><span style={{ display: 'inline-flex', verticalAlign: 'middle', marginRight: '8px', color: 'var(--accent)' }}>{Icons.overview}</span> RECENT INTELLIGENCE</div>
+                    {signals && signals.length > 0 ? (
+                        signals.slice(0, 2).map((sig, i) => (
+                             <div className="post-item" style={{ marginBottom: i === 0 ? '12px' : '0', padding: '16px' }} key={i}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                                    <span style={{ fontSize: '11px', color: 'var(--accent)', fontWeight: '700' }}>{sig.type || 'INTELLIGENCE'}</span>
+                                    <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{sig.time || 'Recently'}</span>
+                                </div>
+                                <div style={{ fontWeight: '500', marginBottom: '4px' }}>{sig.title}</div>
+                                <div style={{ fontSize: '13px', color: 'var(--text-dim)' }}>{sig.desc || 'New intelligence gathered by your CMO network.'}</div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="empty-state" style={{ padding: '20px' }}>
+                            <p>No recent intelligence.</p>
                         </div>
-                        <div style={{ fontWeight: '500', marginBottom: '4px' }}>AI Video Generation Spike</div>
-                        <div style={{ fontSize: '13px', color: 'var(--text-dim)' }}>High engagement around Kling AI tutorials on LinkedIn. Opportunity score: 85/100.</div>
-                    </div>
-                    <div className="post-item" style={{ padding: '16px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                            <span style={{ fontSize: '11px', color: 'var(--success)', fontWeight: '700' }}>CONTENT GAP</span>
-                            <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>5h ago</span>
-                        </div>
-                        <div style={{ fontWeight: '500', marginBottom: '4px' }}>Founders talking about burnout</div>
-                        <div style={{ fontSize: '13px', color: 'var(--text-dim)' }}>Audience is seeking authentic stories. Low competition in your niche.</div>
-                    </div>
+                    )}
                 </div>
                 
                 <div className="card">
-                    <div className="card-title">📝 CONTENT PIPELINE</div>
-                    {posts.length > 0 ? posts.slice(0, 3).map(post => (
+                    <div className="card-title"><span style={{ display: 'inline-flex', verticalAlign: 'middle', marginRight: '8px', color: 'var(--accent)' }}>{Icons.library}</span> CONTENT PIPELINE</div>
+                    {posts && posts.length > 0 ? posts.slice(0, 3).map(post => (
                         <PostItem key={post.id} post={post} compact />
                     )) : (
                         <div className="empty-state" style={{ padding: '20px' }}>
-                            <div className="empty-icon">✨</div>
+                            <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.spark}</div>
                             <p>No content yet. Your CMO network is ready to create.</p>
                         </div>
                     )}
@@ -804,73 +850,155 @@ function CommandCenter({ posts, accounts }) {
 }
 
 // Stubs for new pages
-function OpportunityRadar() {
-    const [signals, setSignals] = useState([]);
-    const [loading, setLoading] = useState(true);
-    
-    useEffect(() => {
-        // Attempt to fetch from API as requested
-        api.get('/pipeline/signals').then(data => {
-            setSignals(data.signals || []);
-            setLoading(false);
-        }).catch(() => {
-            setLoading(false);
-        });
-    }, []);
-
+function OpportunityRadar({ signals }) {
     return (
         <div>
             <div className="header">
-                <h1 className="page-title">Opportunity Radar</h1>
+                <div>
+                    <h1 className="page-title">Opportunity Radar</h1>
+                    <div style={{ color: 'var(--text-dim)', marginTop: '8px' }}>AI-ranked opportunities discovered by your CMO network</div>
+                </div>
             </div>
-            <div className="card">
-                {loading ? (
-                    <div className="loading-center">
-                        <div className="spinner" />
-                        <p>Scanning intelligence sources...</p>
-                    </div>
-                ) : signals.length > 0 ? (
-                    signals.map((sig, i) => <div key={i}>{sig.title}</div>)
-                ) : (
+            
+            {(!signals || signals.length === 0) ? (
+                <div className="card">
                     <div className="empty-state">
-                        <div className="empty-icon">🎯</div>
+                        <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.radar}</div>
                         <p>No opportunities detected yet.</p>
                         <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '8px' }}>Nexus CMO is scanning your intelligence sources.</p>
+                        <button className="btn btn-secondary" style={{ marginTop: '24px' }} onClick={() => window.location.reload()}>Refresh Intelligence</button>
                     </div>
-                )}
-            </div>
+                </div>
+            ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                    {signals.map((sig, i) => (
+                        <div className="card" key={i}>
+                            <h2 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '24px' }}>{sig.title || 'Discovered Opportunity'}</h2>
+                            <div className="radar-score-container" style={{ marginBottom: '24px' }}>
+                                <div className="radar-circle">
+                                    <div className="radar-score">{sig.score || 0}</div>
+                                    <div className="radar-label">{sig.score > 80 ? 'HIGH' : sig.score > 50 ? 'MED' : 'LOW'}</div>
+                                </div>
+                                <div className="factor-list">
+                                    {sig.relevance !== undefined && (
+                                        <div className="factor-item">
+                                            <div className="factor-header"><span>Relevance</span><span>{sig.relevance}%</span></div>
+                                            <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: sig.relevance + '%' }}></div></div>
+                                        </div>
+                                    )}
+                                    {sig.momentum !== undefined && (
+                                        <div className="factor-item">
+                                            <div className="factor-header"><span>Trend Momentum</span><span>{sig.momentum}%</span></div>
+                                            <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: sig.momentum + '%' }}></div></div>
+                                        </div>
+                                    )}
+                                    {sig.audience_fit !== undefined && (
+                                        <div className="factor-item">
+                                            <div className="factor-header"><span>Audience Fit</span><span>{sig.audience_fit}%</span></div>
+                                            <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: sig.audience_fit + '%' }}></div></div>
+                                        </div>
+                                    )}
+                                    {sig.engagement !== undefined && (
+                                        <div className="factor-item">
+                                            <div className="factor-header"><span>Engagement Potential</span><span>{sig.engagement}%</span></div>
+                                            <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: sig.engagement + '%' }}></div></div>
+                                        </div>
+                                    )}
+                                    {sig.content_gap !== undefined && (
+                                        <div className="factor-item">
+                                            <div className="factor-header"><span>Content Gap</span><span>{sig.content_gap}%</span></div>
+                                            <div className="factor-bar-bg"><div className="factor-bar-fill" style={{ width: sig.content_gap + '%' }}></div></div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            <div style={{ display: 'flex', gap: '12px' }}>
+                                <button className="btn btn-primary">Create Content</button>
+                                <button className="btn btn-secondary">View Strategy</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
 
-function AgentNetwork() {
-    const [status, setStatus] = useState(null);
-    const [loading, setLoading] = useState(true);
-    
-    useEffect(() => {
-        api.get('/pipeline/status').then(data => {
-            setStatus(data);
-            setLoading(false);
-        }).catch(() => {
-            setLoading(false);
-        });
-    }, []);
+function AgentNetwork({ agentStatus }) {
+    const defaultPipeline = [
+        { name: 'Scout', role: 'Trend Intelligence', desc: 'Monitors trends, audience signals and emerging opportunities.' },
+        { name: 'Planner', role: 'Content Strategy', desc: 'Turns high-value signals into actionable content strategies.' },
+        { name: 'Creator', role: 'Content Generation', desc: 'Creates platform-specific content from approved strategies.' },
+        { name: 'Reviewer', role: 'Quality Control', desc: 'Checks tone, quality and strategic alignment.' },
+        { name: 'Publisher', role: 'Distribution', desc: 'Prepares and distributes approved content.' },
+        { name: 'Analyst', role: 'Performance Learning', desc: 'Measures performance and feeds insights back into the network.' }
+    ];
+
+    const pipeline = defaultPipeline.map(agent => {
+        const backendAgent = Array.isArray(agentStatus) ? agentStatus.find(a => a.name.toLowerCase() === agent.name.toLowerCase()) : null;
+        return {
+            ...agent,
+            status: backendAgent ? backendAgent.status : 'Offline'
+        };
+    });
+
+    const isNetworkActive = pipeline.some(a => a.status !== 'Offline');
 
     return (
         <div>
             <div className="header">
-                <h1 className="page-title">Agent Network</h1>
+                <div>
+                    <h1 className="page-title">Agent Network</h1>
+                    <div style={{ color: 'var(--text-dim)', marginTop: '8px' }}>Your autonomous social CMO workforce</div>
+                </div>
             </div>
-            <div className="card">
-                {loading ? (
-                    <div className="loading-center"><div className="spinner" /></div>
-                ) : (
+            
+            {!isNetworkActive ? (
+                <div className="card">
                     <div className="empty-state">
-                        <div className="empty-icon">🤖</div>
-                        <p>Your CMO network is active and monitoring.</p>
+                        <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.network}</div>
+                        <p>Your agent network is currently offline.</p>
+                        <button className="btn btn-secondary" style={{ marginTop: '24px' }} onClick={() => window.location.reload()}>Retry Connection</button>
                     </div>
-                )}
-            </div>
+                </div>
+            ) : (
+                <>
+                    <div className="card" style={{ marginBottom: '24px' }}>
+                        <div className="agent-network" style={{ padding: '40px 0' }}>
+                            <div className="agent-line"></div>
+                            {pipeline.map((agent, i) => {
+                                const isActive = agent.status === 'Active' || agent.status === 'Monitoring' || agent.status === 'Ready';
+                                const statusClass = isActive ? (agent.status === 'Active' ? 'status-active' : 'status-ready') : '';
+                                return (
+                                    <div className={`agent-node ${isActive ? 'active' : ''}`} key={i}>
+                                        <div className="agent-name">{agent.name.toUpperCase()}</div>
+                                        <div className="agent-role">{agent.role}</div>
+                                        <div className={`agent-status ${statusClass}`}>● {agent.status}</div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    
+                    <h2 style={{ fontSize: '14px', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--text-dim)', marginBottom: '16px', marginTop: '40px' }}>Agent Details</h2>
+                    <div className="grid-2">
+                        {pipeline.map((agent, i) => {
+                            const isActive = agent.status === 'Active' || agent.status === 'Monitoring' || agent.status === 'Ready';
+                            const statusColor = isActive ? (agent.status === 'Active' ? 'var(--success)' : 'var(--accent)') : 'var(--text-muted)';
+                            return (
+                                <div className="card" key={i} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <div style={{ fontWeight: '700', fontSize: '16px' }}>{agent.name.toUpperCase()}</div>
+                                        <div style={{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: statusColor, background: 'rgba(255,255,255,0.05)', padding: '4px 8px', borderRadius: '4px' }}>● {agent.status}</div>
+                                    </div>
+                                    <div style={{ fontSize: '13px', color: 'var(--accent)' }}>{agent.role}</div>
+                                    <div style={{ fontSize: '13px', color: 'var(--text-dim)', marginTop: '8px', lineHeight: '1.5' }}>{agent.desc}</div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </>
+            )}
         </div>
     );
 }
@@ -883,8 +1011,8 @@ function Analytics() {
             </div>
             <div className="card">
                 <div className="empty-state">
-                    <div className="empty-icon">📈</div>
-                    <p>Not enough data yet.</p>
+                    <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.chart}</div>
+                    <p>Performance Intelligence</p>
                     <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '8px' }}>Performance insights will appear here once content is published.</p>
                 </div>
             </div>
@@ -954,7 +1082,7 @@ function Analytics() {
 
                     <div className="grid-2">
                         <div className="card">
-                            <div className="card-title">🧠 Create with your AI CMO</div>
+                            <div className="card-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px", color: "var(--accent)" }}>{Icons.spark}</span> Create with your AI CMO</div>
 
                             <div className="form-label">Platform</div>
                             <div className="platform-pills">
@@ -1018,12 +1146,12 @@ function Analytics() {
                             </div>
 
                             <button className="btn btn-primary" onClick={generate} disabled={loading || !topic} style={{ width: '100%' }}>
-                                {loading ? <><div className="spinner" /> Generating...</> : '🧠 Generate Content'}
+                                {loading ? <><div className="spinner" /> Generating...</> : '<span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px" }}>{Icons.spark}</span> Generate Content'}
                             </button>
                         </div>
 
                         <div className="card">
-                            <div className="card-title">📤 Preview & Publish</div>
+                            <div className="card-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px", color: "var(--accent)" }}>{Icons.overview}</span> Preview & Publish</div>
 
                             {generated ? (
                                 <>
@@ -1050,7 +1178,7 @@ function Analytics() {
                                 </>
                             ) : (
                                 <div className="empty-state">
-                                    <div className="empty-icon">✨</div>
+                                    <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.spark}</div>
                                     <p>Generated content will appear here</p>
                                 </div>
                             )}
@@ -1105,7 +1233,7 @@ function Analytics() {
             return (
                 <div>
                     <div className="header">
-                        <h1 className="page-title">All Posts</h1>
+                        <h1 className="page-title">Content Library</h1>
                     </div>
 
                     <div className="content-tabs" style={{ maxWidth: '500px', marginBottom: '24px' }}>
@@ -1122,7 +1250,7 @@ function Analytics() {
                         ))}
                         {filtered.length === 0 && (
                             <div className="empty-state">
-                                <div className="empty-icon">📝</div>
+                                <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.library}</div>
                                 <p>No posts found</p>
                             </div>
                         )}
@@ -1192,12 +1320,12 @@ function Analytics() {
             return (
                 <div>
                     <div className="header">
-                        <h1 className="page-title">🎠 Carousel Maker</h1>
+                        <h1 className="page-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "12px", color: "var(--accent)" }}>{Icons.layers}</span> Carousel Maker</h1>
                     </div>
 
                     <div className="grid-2">
                         <div className="card">
-                            <div className="card-title">✨ AI Carousel Generator</div>
+                            <div className="card-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px", color: "var(--accent)" }}>{Icons.spark}</span> AI Carousel Generator</div>
                             <p style={{ color: 'var(--text-muted)', marginBottom: '20px', fontSize: '13px' }}>
                                 Creates images + text with DALL-E 3 (~$0.04/slide)
                             </p>
@@ -1242,12 +1370,12 @@ function Analytics() {
                             </div>
 
                             <button className="btn btn-primary" onClick={generate} disabled={loading || !topic} style={{ width: '100%' }}>
-                                {loading ? <><div className="spinner" /> {progress}</> : `🎨 Generate ${slides} Slides (~$${(slides * 0.04).toFixed(2)})`}
+                                {loading ? <><div className="spinner" /> {progress}</> : `<span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px" }}>{Icons.layers}</span> Generate ${slides} Slides (~$${(slides * 0.04).toFixed(2)})`}
                             </button>
                         </div>
 
                         <div className="card">
-                            <div className="card-title">📱 Preview</div>
+                            <div className="card-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px", color: "var(--accent)" }}>{Icons.overview}</span> Preview</div>
                             {carousel ? (
                                 <div>
                                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginBottom: '16px' }}>
@@ -1273,7 +1401,7 @@ function Analytics() {
                                 </div>
                             ) : (
                                 <div className="empty-state">
-                                    <div className="empty-icon">🎠</div>
+                                    <div className="empty-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', color: 'var(--text-muted)' }}>{Icons.layers}</div>
                                     <p>Your carousel will appear here</p>
                                 </div>
                             )}
@@ -1496,7 +1624,7 @@ function Analytics() {
                         </div>
 
                         <div className="card">
-                            <div className="card-title">📱 Preview</div>
+                            <div className="card-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px", color: "var(--accent)" }}>{Icons.overview}</span> Preview</div>
                             
                             {result ? (
                                 <div>
@@ -1868,7 +1996,7 @@ function Analytics() {
                         </div>
 
                         <div className="card">
-                            <div className="card-title">📱 Preview</div>
+                            <div className="card-title"><span style={{ display: "inline-flex", verticalAlign: "middle", marginRight: "8px", color: "var(--accent)" }}>{Icons.overview}</span> Preview</div>
 
                             {result || polling ? (
                                 <div>
@@ -2239,16 +2367,22 @@ function App() {
     const [tab, setTab] = useState('landing');
     const [posts, setPosts] = useState([]);
     const [accounts, setAccounts] = useState([]);
+    const [signals, setSignals] = useState(null);
+    const [agentStatus, setAgentStatus] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const load = async () => {
         try {
-            const [postsRes, accountsRes] = await Promise.all([
+            const [postsRes, accountsRes, signalsRes, statusRes] = await Promise.all([
                 api.get('/posts').catch(() => ({ posts: [] })),
-                api.get('/accounts').catch(() => ({ accounts: [] }))
+                api.get('/accounts').catch(() => ({ accounts: [] })),
+                api.get('/pipeline/signals').catch(() => null),
+                api.get('/pipeline/status').catch(() => null)
             ]);
             setPosts(postsRes.posts || []);
             setAccounts(accountsRes.accounts || []);
+            setSignals(signalsRes ? (signalsRes.signals || []) : []);
+            setAgentStatus(statusRes ? (Array.isArray(statusRes) ? statusRes : (statusRes.agents || [])) : []);
         } catch (err) {
             console.error('Failed to load:', err);
         }
@@ -2294,9 +2428,9 @@ function App() {
             <div className="cinematic-bg"></div>
             <Sidebar active={tab} onChange={setTab} />
             <main className="main">
-                {tab === 'dashboard' && <CommandCenter posts={posts} accounts={accounts} />}
-                {tab === 'opportunity' && <OpportunityRadar />}
-                {tab === 'network' && <AgentNetwork />}
+                {tab === 'dashboard' && <CommandCenter posts={posts} accounts={accounts} signals={signals} agentStatus={agentStatus} />}
+                {tab === 'opportunity' && <OpportunityRadar signals={signals} />}
+                {tab === 'network' && <AgentNetwork agentStatus={agentStatus} />}
                 {tab === 'create' && <CreateContent onCreated={load} accounts={accounts} />}
                 {tab === 'carousel' && <CarouselMaker onCreated={load} />}
                 {tab === 'video' && <VideoMaker onCreated={load} />}
@@ -2309,24 +2443,6 @@ function App() {
         </div>
     );
 }
-
-
-            return (
-                <div className="app">
-                    <Sidebar active={tab} onChange={setTab} />
-                    <main className="main">
-                        {tab === 'dashboard' && <Dashboard posts={posts} accounts={accounts} />}
-                        {tab === 'create' && <CreateContent onCreated={load} accounts={accounts} />}
-                        {tab === 'carousel' && <CarouselMaker onCreated={load} />}
-                        {tab === 'video' && <VideoMaker onCreated={load} />}
-                        {tab === 'avatar' && <AvatarMaker onCreated={load} />}
-                        {tab === 'posts' && <PostsList posts={posts} onDelete={deletePost} onPublish={publishPost} />}
-                        {tab === 'accounts' && <Accounts accounts={accounts} onRefresh={load} />}
-                        {tab === 'settings' && <Settings />}
-                    </main>
-                </div>
-            );
-        }
 
         ReactDOM.render(<App />, document.getElementById('root'));
     </script>
