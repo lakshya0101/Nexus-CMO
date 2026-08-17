@@ -1,4 +1,4 @@
-# Nexus CMO
+# Nexus CMO 
 
 ## The Autonomous Marketing Intelligence Layer
 
